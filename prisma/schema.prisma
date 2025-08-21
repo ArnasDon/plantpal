@@ -1,15 +1,12 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -23,6 +20,7 @@ model User {
   updatedAt     DateTime
   sessions      Session[]
   accounts      Account[]
+  plants        Plant[]
 
   @@unique([email])
   @@map("user")
@@ -71,4 +69,55 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Plant {
+  id                          String   @id
+  speciesId                   String
+  userId                      String
+  name                        String
+  wateringFrequencyOverride   Float?
+  notes                       String?
+
+  species   Species @relation(fields: [speciesId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
+  waterings Watering[]
+  companions PlantCompanion[] @relation("PlantToCompanion_plant")
+  asCompanion PlantCompanion[] @relation("PlantToCompanion_companion")
+
+  @@map("plant")
+}
+
+model PlantCompanion {
+  plantId     String
+  companionId String
+  notes       String?
+
+  plant     Plant @relation("PlantToCompanion_plant", fields: [plantId], references: [id])
+  companion Plant @relation("PlantToCompanion_companion", fields: [companionId], references: [id])
+
+  @@id([plantId, companionId])
+  @@unique([plantId, companionId])
+  @@map("plant_companion")
+}
+
+model Species {
+  id                     String  @id
+  name                   String  @unique
+  wateringFrequencyDays  Float   @default(1) // CHECK constraint not supported in Prisma
+  tips                   String?
+
+  plants Plant[]
+
+  @@map("species")
+}
+
+model Watering {
+  id        String @id
+  plantId   String
+  wateredAt Int    // INTEGER from SQL → Int in Prisma
+
+  plant Plant @relation(fields: [plantId], references: [id])
+
+  @@map("watering")
 }
