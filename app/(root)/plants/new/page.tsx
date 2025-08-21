@@ -1,7 +1,12 @@
+import PlantForm from "@/components/forms/PlantForm";
 import React from "react";
 
-const NewPlant = () => {
-  return <div>NewPlant</div>;
+const NewPlant = async () => {
+  return (
+    <div>
+      <PlantForm />
+    </div>
+  );
 };
 
 export default NewPlant;

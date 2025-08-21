@@ -7,7 +7,11 @@ const HomePage = async () => {
   if (!user) {
     redirect("/sign-in");
   }
-  return <div className="">Welcome to PlantPal {user?.name}</div>;
+  return (
+    <div className="">
+      <div>Welcome to PlantPal {user?.name}</div>
+    </div>
+  );
 };
 
 export default HomePage;
