@@ -7,13 +7,18 @@ import HydrationStatus from "./HydrationStatus";
 import { waterPlant } from "@/lib/actions/plant.actions";
 import { getHydrationPercentage } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { toast } from "sonner";
 
 const PlantCard = ({ plant }: { plant: Plant }) => {
   const path = usePathname();
 
   const handleWaterPlant = async () => {
     const result = await waterPlant(plant.id, path);
-    // console.log(result);
+    toast.custom((t) => (
+      <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+        <h3 className="font-semibold">Plant watered successfully</h3>
+      </div>
+    ));
   };
 
   let hydrationPercentage = 0;
