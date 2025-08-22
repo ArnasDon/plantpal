@@ -2,6 +2,8 @@
 
 import { prisma } from "@/lib/prisma-client";
 import { getUser } from "./auth.actions";
+import console from "console";
+import { revalidatePath } from "next/cache";
 
 export const createPlant = async (formData: PlantForm) => {
   const user = await getUser();
@@ -37,9 +39,49 @@ export const getUserPlants = async () => {
         species: true,
       },
     });
-    return plants as Plant[];
+
+    const plantsWithHydration = await Promise.all(
+      plants.map(async (plant) => {
+        const daysSinceLastWatering = await getDaysSinceLastWatering(plant.id);
+        return { ...plant, daysSinceLastWatering };
+      })
+    );
+
+    return plantsWithHydration as Plant[];
   } catch (error) {
     console.error(error);
     // return { error: "Failed to get user plants" };
   }
+};
+
+export const waterPlant = async (plantId: string, path: string) => {
+  const user = await getUser();
+  if (!user) {
+    return { error: "User not found" };
+  }
+  const userId = user.id;
+  const plant = await prisma.watering.create({
+    data: {
+      id: crypto.randomUUID(),
+      plantId: plantId,
+    },
+  });
+  revalidatePath(path);
+  return { success: true, data: plant };
+};
+
+export const getDaysSinceLastWatering = async (plantId: string) => {
+  const lastWatering = await prisma.watering.findFirst({
+    where: { plantId: plantId },
+    orderBy: { createdAt: "desc" },
+  });
+
+  if (!lastWatering) {
+    return null; // Plant has never been watered
+  }
+  const daysSinceLastWatering = Math.floor(
+    (new Date().getTime() - lastWatering?.createdAt.getTime()) /
+      (1000 * 60 * 60 * 24)
+  );
+  return daysSinceLastWatering;
 };

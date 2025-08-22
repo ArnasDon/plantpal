@@ -19,6 +19,7 @@ interface Plant {
   name: string;
   notes: string | null;
   wateringFrequencyOverride: number | null;
+  daysSinceLastWatering?: number;
 }
 
 interface PlantForm {
