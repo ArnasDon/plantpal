@@ -78,6 +78,8 @@ model Plant {
   name                        String
   wateringFrequencyOverride   Float?
   notes                       String?
+  createdAt                   DateTime @default(now())
+  updatedAt                   DateTime @updatedAt @default(now())
 
   species   Species @relation(fields: [speciesId], references: [id])
   user      User    @relation(fields: [userId], references: [id])
@@ -92,6 +94,8 @@ model PlantCompanion {
   plantId     String
   companionId String
   notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
 
   plant     Plant @relation("PlantToCompanion_plant", fields: [plantId], references: [id])
   companion Plant @relation("PlantToCompanion_companion", fields: [companionId], references: [id])
@@ -106,6 +110,8 @@ model Species {
   name                   String  @unique
   wateringFrequencyDays  Float   @default(1) // CHECK constraint not supported in Prisma
   tips                   String?
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt @default(now())
 
   plants Plant[]
 
@@ -115,7 +121,8 @@ model Species {
 model Watering {
   id        String @id
   plantId   String
-  wateredAt Int    // INTEGER from SQL → Int in Prisma
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 
   plant Plant @relation(fields: [plantId], references: [id])
 
