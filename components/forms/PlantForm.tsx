@@ -27,6 +27,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import SpeciesForm from "./SpeciesForm";
 import { getSpecies } from "@/lib/actions/species.actions";
 import { redirect } from "next/navigation";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   speciesId: z.string().min(1, { message: "Species is required" }),
@@ -54,7 +55,7 @@ const PlantForm = () => {
       speciesId: "",
       name: "",
       notes: undefined,
-      wateringFrequencyOverride: undefined,
+      wateringFrequencyOverride: 0,
     },
   });
 
@@ -65,6 +66,11 @@ const PlantForm = () => {
     if (result.success) {
       console.log("plant created");
       console.log(result.data);
+      toast.custom((t) => (
+        <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Plant created successfully</h3>
+        </div>
+      ));
       redirect(`/plants/${result.data.id}`);
     } else {
       console.log("plant creation failed");
@@ -102,7 +108,19 @@ const PlantForm = () => {
                 <div className="flex flex-row gap-2 max-lg:flex-col">
                   <FormControl>
                     <Select
-                      onValueChange={field.onChange}
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        // Find the selected species and set watering frequency
+                        const selectedSpecies = species.find(
+                          (s) => s.id === value
+                        );
+                        if (selectedSpecies?.wateringFrequencyDays) {
+                          form.setValue(
+                            "wateringFrequencyOverride",
+                            selectedSpecies.wateringFrequencyDays
+                          );
+                        }
+                      }}
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="bg-dark-200 border-dark-300 focus-visible:ring-0 focus-visible:ring-offset-0 w-full">
@@ -159,7 +177,11 @@ const PlantForm = () => {
               </FormItem>
             )}
           />
-          <Button className="w-full" type="submit">
+          <Button
+            className="w-full"
+            type="submit"
+            disabled={form.formState.isSubmitting}
+          >
             Save Plant
           </Button>
         </form>
