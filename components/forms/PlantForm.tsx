@@ -73,7 +73,7 @@ const PlantForm = () => {
   };
 
   return (
-    <div className="px-20 py-8 max-w-[700px] mx-auto">
+    <div className="px-20 py-8 max-w-[700px] mx-auto flex flex-col gap-8">
       <h2 className="text-2xl font-bold">Add a new plant species</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
