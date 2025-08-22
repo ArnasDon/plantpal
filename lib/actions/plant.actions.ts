@@ -64,6 +64,7 @@ export const waterPlant = async (plantId: string, path: string) => {
   }
 };
 
+//TODO: Not working as expected, fix this
 export const getDaysSinceLastWatering = async (plantId: string) => {
   const lastWatering = await prisma.watering.findFirst({
     where: { plantId: plantId },
@@ -73,9 +74,22 @@ export const getDaysSinceLastWatering = async (plantId: string) => {
   if (!lastWatering) {
     return null; // Plant has never been watered
   }
-  const daysSinceLastWatering = Math.floor(
-    (new Date().getTime() - lastWatering?.createdAt.getTime()) /
-      (1000 * 60 * 60 * 24)
+
+  // Get only the date part (year, month, day) for both dates
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const watered = lastWatering.createdAt;
+  const wateredDate = new Date(
+    watered.getFullYear(),
+    watered.getMonth(),
+    watered.getDate()
   );
+
+  // Calculate the difference in days, ignoring time
+  const msPerDay = 1000 * 60 * 60 * 24;
+  const daysSinceLastWatering = Math.floor(
+    (today.getTime() - wateredDate.getTime()) / msPerDay
+  );
+
   return daysSinceLastWatering;
 };
