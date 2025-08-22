@@ -85,7 +85,7 @@ const SpeciesForm = ({
                   <Input
                     placeholder="e.g. Peace Lily"
                     {...field}
-                    className="bg-dark-100"
+                    className="bg-dark-200 border-dark-300"
                   />
                 </FormControl>
                 <FormMessage />
@@ -112,7 +112,7 @@ const SpeciesForm = ({
                 placeholder="e.g. Likes shady places"
                 value={tipInput}
                 onChange={(e) => setTipInput(e.target.value)}
-                className="bg-dark-100"
+                className="bg-dark-200 border-dark-300"
               />
               <Button type="button" onClick={handleAddTip}>
                 Add Tip
@@ -133,7 +133,7 @@ const SpeciesForm = ({
                     onChange={(e) => {
                       field.onChange(Number(e.target.value));
                     }}
-                    className="bg-dark-100"
+                    className="bg-dark-200 border-dark-300"
                   />
                 </FormControl>
                 <FormMessage />

@@ -21,7 +21,7 @@ export const createPlant = async (formData: PlantForm) => {
       speciesId: formData.speciesId,
     },
   });
-  return plant;
+  return { success: true, data: plant };
 };
 
 export const getUserPlants = async () => {

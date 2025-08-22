@@ -26,6 +26,7 @@ import {
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import SpeciesForm from "./SpeciesForm";
 import { getSpecies } from "@/lib/actions/species.actions";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
   speciesId: z.string().min(1, { message: "Species is required" }),
@@ -60,15 +61,20 @@ const PlantForm = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("submitting");
     console.log(values);
-    const plant = await createPlant(values);
-    console.log("plant created");
-    console.log(plant);
+    const result = await createPlant(values);
+    if (result.success) {
+      console.log("plant created");
+      console.log(result.data);
+      redirect(`/plants/${result.data.id}`);
+    } else {
+      console.log("plant creation failed");
+      console.log(result.error);
+    }
   };
 
   return (
-    <div>
+    <div className="px-20 py-8 max-w-[700px] mx-auto">
       <h2 className="text-2xl font-bold">Add a new plant species</h2>
-
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -93,16 +99,16 @@ const PlantForm = () => {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Species</FormLabel>
-                <div className="flex flex-row gap-2">
+                <div className="flex flex-row gap-2 max-lg:flex-col">
                   <FormControl>
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="bg-dark-200 border-dark-300 focus-visible:ring-0 focus-visible:ring-offset-0 w-full">
                         <SelectValue placeholder="Select a species" />
                       </SelectTrigger>
-                      <SelectContent className="bg-dark-200">
+                      <SelectContent className="bg-dark-200 border-dark-300">
                         {species?.map((species) => (
                           <SelectItem key={species.id} value={species.id}>
                             {species.name}
@@ -153,11 +159,13 @@ const PlantForm = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button className="w-full" type="submit">
+            Save Plant
+          </Button>
         </form>
       </Form>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="bg-dark-200">
+        <DialogContent className="bg-dark-100 border-dark-300 shadow-card">
           <DialogTitle>New Species</DialogTitle>
           <SpeciesForm setIsOpen={setIsOpen} fetchSpecies={fetchSpecies} />
         </DialogContent>

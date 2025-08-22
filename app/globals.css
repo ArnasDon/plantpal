@@ -8,9 +8,9 @@
   --color-dark-200: #22291d;
   --color-dark-300: #2d3327;
   --color-dark-400: #424a3b;
+  --color-dark-600: #898f84;
   --color-light-100: #ffffff;
   --color-light-200: #c5cbc0;
-  --color-dark-300: #bbbbbb;
   --color-primary: #368501;
   --color-destructive: #e74646;
   --color-destructive-200: #ff6b6b;
@@ -29,6 +29,11 @@
 @layer base {
   body {
     @apply bg-dark-100 text-light-100 font-onest;
+  }
+  input,
+  textarea,
+  select {
+    @apply bg-dark-200! border-dark-300! focus-visible:ring-0! focus-visible:ring-offset-0!;
   }
 }
 

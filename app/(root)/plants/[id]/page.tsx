@@ -1,7 +1,8 @@
 import React from "react";
 
-const PlantPage = ({ params }: { params: { id: string } }) => {
-  return <div>PlantPage {params.id}</div>;
+const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  return <div>PlantPage {id}</div>;
 };
 
 export default PlantPage;
