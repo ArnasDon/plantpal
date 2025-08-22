@@ -14,11 +14,20 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
 
   const handleWaterPlant = async () => {
     const result = await waterPlant(plant.id, path);
-    toast.custom((t) => (
-      <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
-        <h3 className="font-semibold">Plant watered successfully</h3>
-      </div>
-    ));
+    if (result.success) {
+      toast.custom(() => (
+        <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Plant watered successfully</h3>
+        </div>
+      ));
+    } else {
+      toast.custom(() => (
+        <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Plant watering failed</h3>
+          <p className="text-sm">{result.error as string}</p>
+        </div>
+      ));
+    }
   };
 
   let hydrationPercentage = 0;

@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma-client";
 import { getUser } from "./auth.actions";
-import console from "console";
 import { revalidatePath } from "next/cache";
 
 export const createPlant = async (formData: PlantForm) => {
@@ -29,9 +28,6 @@ export const createPlant = async (formData: PlantForm) => {
 export const getUserPlants = async () => {
   try {
     const user = await getUser();
-    // if (!user) {
-    //   throw new Error("User not found");
-    // }
     const userId = user?.id;
     const plants = await prisma.plant.findMany({
       where: { userId: userId },
@@ -47,27 +43,25 @@ export const getUserPlants = async () => {
       })
     );
 
-    return plantsWithHydration as Plant[];
+    return { success: true, data: plantsWithHydration as Plant[] };
   } catch (error) {
-    console.error(error);
-    // return { error: "Failed to get user plants" };
+    return { success: false, error: error };
   }
 };
 
 export const waterPlant = async (plantId: string, path: string) => {
-  const user = await getUser();
-  if (!user) {
-    return { error: "User not found" };
+  try {
+    const plant = await prisma.watering.create({
+      data: {
+        id: crypto.randomUUID(),
+        plantId: plantId,
+      },
+    });
+    revalidatePath(path);
+    return { success: true, data: plant };
+  } catch (error) {
+    return { success: false, error: error };
   }
-  const userId = user.id;
-  const plant = await prisma.watering.create({
-    data: {
-      id: crypto.randomUUID(),
-      plantId: plantId,
-    },
-  });
-  revalidatePath(path);
-  return { success: true, data: plant };
 };
 
 export const getDaysSinceLastWatering = async (plantId: string) => {

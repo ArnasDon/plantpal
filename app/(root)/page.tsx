@@ -53,7 +53,7 @@ const HomePage = async () => {
         />
       </div>
       <div className="flex flex-wrap items-start justify-center gap-4">
-        {plants?.map((plant: Plant) => (
+        {plants?.data?.map((plant: Plant) => (
           <PlantCard key={plant.id} plant={plant} />
         ))}
       </div>

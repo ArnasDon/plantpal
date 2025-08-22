@@ -66,15 +66,19 @@ const PlantForm = () => {
     if (result.success) {
       console.log("plant created");
       console.log(result.data);
-      toast.custom((t) => (
+      toast.custom(() => (
         <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
           <h3 className="font-semibold">Plant created successfully</h3>
         </div>
       ));
       redirect(`/plants/${result.data.id}`);
     } else {
-      console.log("plant creation failed");
-      console.log(result.error);
+      toast.custom(() => (
+        <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Plant creation failed</h3>
+          <p className="text-sm">{result.error}</p>
+        </div>
+      ));
     }
   };
 
