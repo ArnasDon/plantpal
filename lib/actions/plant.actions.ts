@@ -49,6 +49,32 @@ export const getUserPlants = async () => {
   }
 };
 
+export const getPlant = async (plantId: string) => {
+  try {
+    const user = await getUser();
+    if (!user) {
+      return { success: false, error: "User not found" };
+    }
+    const userId = user.id;
+    const plant = await prisma.plant.findUnique({
+      where: { id: plantId, userId: userId },
+      include: {
+        species: true,
+      },
+    });
+
+    if (!plant) {
+      return { success: false, error: "Plant not found" };
+    }
+
+    const daysSinceLastWatering = await getDaysSinceLastWatering(plantId);
+
+    return { success: true, data: { ...plant, daysSinceLastWatering } };
+  } catch (error) {
+    return { success: false, error: error };
+  }
+};
+
 export const waterPlant = async (plantId: string, path: string) => {
   try {
     const plant = await prisma.watering.create({
@@ -64,7 +90,6 @@ export const waterPlant = async (plantId: string, path: string) => {
   }
 };
 
-//TODO: Not working as expected, fix this
 export const getDaysSinceLastWatering = async (plantId: string) => {
   const lastWatering = await prisma.watering.findFirst({
     where: { plantId: plantId },
