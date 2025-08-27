@@ -28,3 +28,11 @@ interface PlantForm {
   notes?: string;
   wateringFrequencyOverride?: number;
 }
+
+interface PlantCompanion {
+  companionId: string;
+  plantId: string;
+  companion?: Plant;
+  plant?: Plant;
+  notes: string;
+}

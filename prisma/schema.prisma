@@ -82,7 +82,7 @@ model Plant {
   updatedAt                   DateTime @updatedAt @default(now())
 
   species   Species @relation(fields: [speciesId], references: [id])
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   waterings Watering[]
   companions PlantCompanion[] @relation("PlantToCompanion_plant")
   asCompanion PlantCompanion[] @relation("PlantToCompanion_companion")
@@ -97,8 +97,8 @@ model PlantCompanion {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt @default(now())
 
-  plant     Plant @relation("PlantToCompanion_plant", fields: [plantId], references: [id])
-  companion Plant @relation("PlantToCompanion_companion", fields: [companionId], references: [id])
+  plant     Plant @relation("PlantToCompanion_plant", fields: [plantId], references: [id], onDelete: Cascade)
+  companion Plant @relation("PlantToCompanion_companion", fields: [companionId], references: [id], onDelete: Cascade)
 
   @@id([plantId, companionId])
   @@unique([plantId, companionId])
@@ -124,7 +124,7 @@ model Watering {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
 
-  plant Plant @relation(fields: [plantId], references: [id])
+  plant Plant @relation(fields: [plantId], references: [id], onDelete: Cascade)
 
   @@map("watering")
 }

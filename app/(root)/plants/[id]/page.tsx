@@ -1,13 +1,16 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/lib/actions/auth.actions";
-import { getPlant } from "@/lib/actions/plant.actions";
+import { getPlant, getUserPlants } from "@/lib/actions/plant.actions";
+import { getPlantCompanions } from "@/lib/actions/companion.actions";
 import HydrationStatus from "@/components/HydrationStatus";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
 import { getHydrationPercentage } from "@/lib/utils";
 import CompanionCard from "@/components/CompanionCard";
+import AddCompanion from "@/components/AddCompanion";
+import { getEligibleCompanions } from "@/lib/actions/companion.actions";
 
 const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await getUser();
@@ -16,7 +19,13 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
   const { id } = await params;
   const plant = await getPlant(id);
-  if (!plant.success) {
+
+  const userPlants = await getUserPlants();
+
+  const companions = await getPlantCompanions(id);
+  console.log(companions.data);
+  const eligibleCompanions = await getEligibleCompanions(id);
+  if (!plant.success || !userPlants.success || !eligibleCompanions.success) {
     redirect("/plants");
   }
 
@@ -36,8 +45,8 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const careTips = JSON.parse(plant.data?.species?.tips || "[]");
 
   return (
-    <main className="flex flex-col gap-8 max-w-screen-xl mx-auto">
-      <div className="flex flex-row  justify-between gap-4 pt-12">
+    <main className="flex flex-col gap-8 max-w-screen-2xl mx-auto py-12 px-12">
+      <div className="flex flex-row  justify-between gap-4">
         <h2 className="text-4xl font-semibold font-fraunces">Plant Details</h2>
         <div className="flex flex-row gap-4">
           <Button className="bg-dark-200 text-light-200 hover:bg-dark-200/80 cursor-pointer">
@@ -57,6 +66,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             alt="Plant"
             width={500}
             height={500}
+            className="min-w-[500px] min-h-[500px] object-cover"
           />
         </div>
         <div className="flex flex-col gap-10">
@@ -67,12 +77,14 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <h2 className="text-4xl font-semibold font-fraunces">
               {plant.data?.name}
             </h2>
-            <p className="text-lg text-dark-600">
-              Days since last watered:{" "}
-              <span className="text-white">
-                {plant.data?.daysSinceLastWatering} Days
-              </span>
-            </p>
+            {plant.data?.daysSinceLastWatering !== null && (
+              <p className="text-lg text-dark-600">
+                Days since last watered:{" "}
+                <span className="text-white">
+                  {plant.data?.daysSinceLastWatering} Days
+                </span>
+              </p>
+            )}
             <HydrationStatus value={hydrationPercentage} />
           </div>
 
@@ -94,10 +106,24 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <h3 className="text-xl font-semibold font-fraunces">
               Companion Plants
             </h3>
-            <div className="flex flex-row gap-8">
-              <CompanionCard />
-              <CompanionCard />
-              <CompanionCard />
+            <div className="flex flex-wrap gap-6">
+              {eligibleCompanions.data &&
+                eligibleCompanions.data.length > 0 && (
+                  <AddCompanion
+                    plantId={id}
+                    eligibleCompanions={eligibleCompanions.data || []}
+                  />
+                )}
+              {companions.data?.map((companion: PlantCompanion) => (
+                <CompanionCard
+                  key={companion.companion?.id}
+                  name={companion.companion?.name || ""}
+                  species={companion.companion?.species?.name || ""}
+                  notes={companion.notes || ""}
+                  id={companion.companion?.id || ""}
+                  companionId={companion.plant?.id || ""}
+                />
+              ))}
             </div>
           </div>
         </div>

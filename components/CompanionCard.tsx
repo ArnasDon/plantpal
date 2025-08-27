@@ -1,23 +1,117 @@
+"use client";
 import Image from "next/image";
 import React from "react";
-import { Badge } from "./ui/badge";
+import { Badge } from "@/components/ui/badge";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import Link from "next/link";
+import { toast } from "sonner";
+import { deletePlantCompanion } from "@/lib/actions/companion.actions";
 
-const CompanionCard = () => {
+const CompanionCard = ({
+  name,
+  species,
+  notes,
+  id,
+  companionId,
+}: {
+  name: string;
+  species: string;
+  notes: string;
+  id: string;
+  companionId: string;
+}) => {
   return (
-    <div className="bg-dark-300 rounded-lg p-2 shadow-plant-card border-2 border-dark-400 min-w-[210px]">
-      <div className="flex flex-col gap-4 items-center">
-        <Badge className="bg-dark-400 text-light-200">Plant Species</Badge>
-        <p className="text-2xl font-semibold font-fraunces">Plant Name</p>
-
-        <Image
-          src={"/images/plant-default.png"}
-          alt="Plant"
-          width={100}
-          height={100}
+    <>
+      {notes && notes.length > 0 ? (
+        <Tooltip>
+          <TooltipTrigger>
+            <CompanionCardContent
+              name={name}
+              species={species}
+              id={id}
+              companionId={companionId}
+            />
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{notes}</p>
+          </TooltipContent>
+        </Tooltip>
+      ) : (
+        <CompanionCardContent
+          name={name}
+          species={species}
+          id={id}
+          companionId={companionId}
         />
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
 export default CompanionCard;
+
+const CompanionCardContent = ({
+  name,
+  species,
+  id,
+  companionId,
+}: {
+  name: string;
+  species: string;
+  id: string;
+  companionId: string;
+}) => {
+  const handleDeletePlantCompanion = async (
+    plantId: string,
+    companionId: string,
+    path: string
+  ) => {
+    const result = await deletePlantCompanion(plantId, companionId, path);
+    if (result.success) {
+      toast.custom(() => (
+        <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Companion deleted successfully</h3>
+        </div>
+      ));
+    } else {
+      toast.custom(() => (
+        <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+          <h3 className="font-semibold">Failed to delete companion</h3>
+          <p className="text-sm">{result.error as string}</p>
+        </div>
+      ));
+    }
+  };
+  return (
+    <Link href={`/plants/${id}`}>
+      <div className="relative bg-dark-300 rounded-lg p-2 shadow-plant-card border-2 border-dark-400 min-w-[210px] min-h-[220px]">
+        <Image
+          src="/icons/cross.svg"
+          alt="Delete"
+          width={16}
+          height={16}
+          className="absolute top-3 right-3 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleDeletePlantCompanion(id, companionId, `/plants/${id}`);
+          }}
+        />
+        <div className="flex flex-col gap-4 items-center">
+          <Badge className="bg-dark-400 text-light-200">{species}</Badge>
+          <p className="text-2xl font-semibold font-fraunces">{name}</p>
+          <Image
+            src="/images/plant-default.png"
+            alt="Plant"
+            width={100}
+            height={100}
+          />
+        </div>
+      </div>
+    </Link>
+  );
+};
