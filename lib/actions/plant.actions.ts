@@ -75,7 +75,13 @@ export const getPlant = async (plantId: string) => {
   }
 };
 
-export const waterPlant = async (plantId: string, path: string) => {
+export const waterPlant = async ({
+  plantId,
+  path,
+}: {
+  plantId: string;
+  path: string;
+}) => {
   try {
     const plant = await prisma.watering.create({
       data: {

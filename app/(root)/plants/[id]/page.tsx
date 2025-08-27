@@ -7,10 +7,11 @@ import HydrationStatus from "@/components/HydrationStatus";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
-import { getHydrationPercentage } from "@/lib/utils";
+import { cn, getHydrationPercentage } from "@/lib/utils";
 import CompanionCard from "@/components/CompanionCard";
 import AddCompanion from "@/components/AddCompanion";
 import { getEligibleCompanions } from "@/lib/actions/companion.actions";
+import WaterButton from "@/components/WaterButton";
 
 const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await getUser();
@@ -60,23 +61,46 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
       </div>
       <div className="flex flex-row items-start gap-12">
-        <div className="rounded-lg p-5 bg-dark-200 shadow-plant-card border-2 border-dark-300">
-          <Image
-            src={"/images/plant-big.png"}
-            alt="Plant"
-            width={500}
-            height={500}
-            className="min-w-[500px] min-h-[500px] object-cover"
-          />
+        <div className="flex flex-col gap-4">
+          <div
+            className={cn(
+              "relative rounded-lg p-5 bg-dark-200 shadow-plant-card border-2 border-dark-300",
+              needsWatering && "border-destructive-200 border-2"
+            )}
+          >
+            {needsWatering && (
+              <Badge className="bg-destructive-200 text-destructive-foreground absolute -top-3 right-3">
+                Water Today
+              </Badge>
+            )}
+            <Image
+              src={"/images/plant-big.png"}
+              alt="Plant"
+              width={500}
+              height={500}
+              className="min-w-[500px] min-h-[500px] object-cover"
+            />
+          </div>
+          <div className="flex flex-col gap-4">
+            {plant.data?.notes && (
+              <div className="flex flex-col gap-4">
+                <h3 className="text-xl font-semibold font-fraunces">Notes</h3>
+                <p className="text-lg text-dark-600">{plant.data?.notes}</p>
+              </div>
+            )}
+          </div>
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
             <Badge className="bg-dark-400 text-light-200 text-md">
               {plant.data?.species?.name}
             </Badge>
-            <h2 className="text-4xl font-semibold font-fraunces">
-              {plant.data?.name}
-            </h2>
+            <div className="flex flex-row gap-4">
+              <h2 className="text-4xl font-semibold font-fraunces">
+                {plant.data?.name}
+              </h2>
+              <WaterButton plantId={plant.data!.id} />
+            </div>
             {plant.data?.daysSinceLastWatering !== null && (
               <p className="text-lg text-dark-600">
                 Days since last watered:{" "}
