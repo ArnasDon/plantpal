@@ -35,12 +35,14 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (plant.data?.daysSinceLastWatering !== null) {
     hydrationPercentage = getHydrationPercentage(
-      plant.data?.daysSinceLastWatering || -1,
-      plant.data?.wateringFrequencyOverride ||
-        plant.data?.species?.wateringFrequencyDays ||
+      plant.data?.daysSinceLastWatering ?? -1,
+      plant.data?.wateringFrequencyOverride ??
+        plant.data?.species?.wateringFrequencyDays ??
         0
     );
   }
+
+  console.log("hydrationPercentage", hydrationPercentage);
 
   const needsWatering = hydrationPercentage < 1;
 
