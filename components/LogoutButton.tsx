@@ -1,6 +1,6 @@
 "use client";
-import { authClient } from "@/lib/auth-client";
 import React from "react";
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
@@ -11,10 +11,7 @@ const LogoutButton = () => {
   };
 
   return (
-    <button
-      onClick={handleLogout}
-      className="bg-destructive shadow-button hover:bg-destructive/80 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 transition-all duration-300"
-    >
+    <button onClick={handleLogout} className="button-logout">
       Logout
     </button>
   );

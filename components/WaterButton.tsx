@@ -15,13 +15,13 @@ const WaterButton = ({ plantId }: { plantId: string }) => {
     const result = await waterPlant({ plantId, path });
     if (result.success) {
       toast.custom(() => (
-        <div className="bg-primary shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-success">
           <h3 className="font-semibold">Plant watered successfully</h3>
         </div>
       ));
     } else {
       toast.custom(() => (
-        <div className="bg-destructive shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-error">
           <h3 className="font-semibold">Plant watering failed</h3>
           <p className="text-sm">{result.error as string}</p>
         </div>

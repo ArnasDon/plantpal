@@ -64,14 +64,14 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
       const result = await updatePlant(plant.id, values);
       if (result.success) {
         toast.custom(() => (
-          <div className="bg-primary shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+          <div className="toast-success">
             <h3 className="font-semibold">Plant updated successfully</h3>
           </div>
         ));
         redirect(`/plants/${plant.id}`);
       } else {
         toast.custom(() => (
-          <div className="bg-destructive shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+          <div className="toast-error">
             <h3 className="font-semibold">Plant update failed</h3>
             <p className="text-sm">{result.error}</p>
           </div>
@@ -81,14 +81,14 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
       const result = await createPlant(values);
       if (result.success) {
         toast.custom(() => (
-          <div className="bg-primary shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+          <div className="toast-success">
             <h3 className="font-semibold">Plant created successfully</h3>
           </div>
         ));
         redirect(`/plants/${result.data.id}`);
       } else {
         toast.custom(() => (
-          <div className="bg-destructive shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+          <div className="toast-error">
             <h3 className="font-semibold">Plant creation failed</h3>
             <p className="text-sm">{result.error}</p>
           </div>
@@ -98,11 +98,9 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
   };
 
   return (
-    <div className="mx-auto flex max-w-[700px] flex-col gap-12 px-20 py-8 max-md:px-4">
+    <div className="form-container">
       <div className="flex flex-col gap-6">
-        <h2 className="font-fraunces text-4xl font-semibold">
-          {plant ? "Edit Plant" : "Add a new plant"}
-        </h2>
+        <h2 className="text-4xl">{plant ? "Edit Plant" : "Add a new plant"}</h2>
         <p className="text-light-200">
           Keep track of your plants and give them the care they deserve.
         </p>
@@ -149,12 +147,16 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
                       }}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="bg-dark-200 border-dark-300 w-full focus-visible:ring-0 focus-visible:ring-offset-0">
+                      <SelectTrigger className="form-select">
                         <SelectValue placeholder="Select a species" />
                       </SelectTrigger>
                       <SelectContent className="bg-dark-200 border-dark-300">
                         {species?.map((species) => (
-                          <SelectItem key={species.id} value={species.id}>
+                          <SelectItem
+                            key={species.id}
+                            value={species.id}
+                            className="hover:bg-dark-100"
+                          >
                             {species.name}
                           </SelectItem>
                         ))}

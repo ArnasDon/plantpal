@@ -14,9 +14,9 @@ const MyPlants = async () => {
   }
   const plants = await getUserPlants();
   return (
-    <main className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-8 overflow-hidden py-12">
+    <main className="page-container">
       <Hero />
-      <div className="flex flex-wrap items-start justify-center gap-4">
+      <section className="plants-section">
         {plants.data &&
           plants.data.length > 0 &&
           plants.data.map((plant: Plant) => (
@@ -24,18 +24,16 @@ const MyPlants = async () => {
           ))}
         {plants.data && plants.data.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-4">
-            <h2 className="font-fraunces text-2xl font-semibold">
-              No plants added yet.
-            </h2>
+            <h2>No plants added yet.</h2>
             <p className="text-light-200">Add a plant to get started.</p>
             <Link href="/plants/new">
-              <Button className="cursor-pointer px-8 py-6">
+              <Button className="button-big">
                 <h2 className="text-2xl font-semibold">Add a plant</h2>
               </Button>
             </Link>
           </div>
         )}
-      </div>
+      </section>
     </main>
   );
 };

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="bg-dark-200 relative mx-20 flex flex-col items-center justify-center rounded-lg border-[2px] border-white/27 py-12 max-md:mx-4 max-md:w-full max-md:px-2">
+    <section className="hero-section">
       {/* Top leaf */}
       <Image
         src="/images/leaves.png"
@@ -14,10 +14,8 @@ const Hero = () => {
       />
 
       {/* Center text */}
-      <div className="mx-40 flex max-w-2xl flex-col items-center justify-center gap-4 max-md:mx-4 max-md:w-full">
-        <h1 className="font-fraunces text-center text-5xl font-semibold">
-          Keep Your Plants Happy, One Sip at a Time 🌿
-        </h1>
+      <div className="hero-text-container">
+        <h1>Keep Your Plants Happy, One Sip at a Time 🌿</h1>
         <p className="text-dark-600 mt-2 text-center">
           Track schedules and keep your plants in great shape.
         </p>
@@ -40,7 +38,7 @@ const Hero = () => {
         height={374}
         className="absolute -right-30 -bottom-26 max-md:hidden"
       />
-    </div>
+    </section>
   );
 };
 

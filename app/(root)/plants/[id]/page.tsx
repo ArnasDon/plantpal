@@ -47,13 +47,13 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const careTips = JSON.parse(plant.data?.species?.tips || "[]");
 
   return (
-    <main className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-12 py-12">
+    <main className="plant-details-container">
       {/* Header */}
-      <div className="flex flex-row justify-between gap-4 max-lg:flex-col max-lg:items-center">
-        <h2 className="font-fraunces text-4xl font-semibold">Plant Details</h2>
+      <div className="plant-details-header">
+        <h1 className="text-4xl">Plant Details</h1>
         <div className="flex flex-row gap-4">
           <Link href={`/plants/${id}/edit`}>
-            <Button className="bg-dark-200 text-light-200 hover:bg-dark-200/80 cursor-pointer">
+            <Button className="button-edit">
               <Image src="/icons/edit.svg" alt="Edit" width={16} height={16} />
               <p>Edit plant</p>
             </Button>
@@ -61,16 +61,16 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <DeletePlantButton plantId={id} />
         </div>
       </div>
-      <div className="flex flex-row items-start gap-12 max-lg:flex-col max-lg:items-center">
+      <section className="plant-details-section">
         <div className="flex flex-col gap-4">
           <div
             className={cn(
-              "bg-dark-200 shadow-plant-card border-dark-300 relative rounded-lg border-2 p-5",
+              "plant-details-image",
               needsWatering && "border-destructive-200 border-2"
             )}
           >
             {needsWatering && (
-              <Badge className="bg-destructive-200 text-destructive-foreground absolute -top-3 right-3">
+              <Badge className="badge-water-today absolute -top-3 right-3">
                 Water Today
               </Badge>
             )}
@@ -82,10 +82,10 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               className="min-h-[500px] min-w-[500px] object-cover max-lg:min-h-[300px] max-lg:min-w-[300px]"
             />
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="plant-details-notes">
             {plant.data?.notes && (
-              <div className="flex flex-col gap-4">
-                <h3 className="font-fraunces text-xl font-semibold">Notes</h3>
+              <div className="plant-details-notes">
+                <h3>Notes</h3>
                 <p className="text-dark-600 text-lg">{plant.data?.notes}</p>
               </div>
             )}
@@ -93,13 +93,11 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         </div>
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-6">
-            <Badge className="bg-dark-400 text-light-200 text-md">
+            <Badge className="badge-species text-md">
               {plant.data?.species?.name}
             </Badge>
-            <div className="flex flex-row gap-4 max-lg:w-full max-lg:justify-between">
-              <h2 className="font-fraunces text-4xl font-semibold">
-                {plant.data?.name}
-              </h2>
+            <div className="plant-details-name">
+              <h2 className="text-4xl">{plant.data?.name}</h2>
               <WaterButton plantId={plant.data!.id} />
             </div>
             {plant.data?.daysSinceLastWatering !== null && (
@@ -114,7 +112,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           <div className="flex flex-col gap-6">
-            <h3 className="font-fraunces text-xl font-semibold">Care Tips</h3>
+            <h3>Care Tips</h3>
             {careTips.length > 0 ? (
               <ul className="list-inside list-disc space-y-3">
                 {careTips.map((tip: string) => (
@@ -127,11 +125,9 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <p>No care tips available</p>
             )}
           </div>
-          <div className="flex flex-col gap-6 max-lg:w-full max-lg:items-center">
-            <h3 className="font-fraunces text-xl font-semibold">
-              Companion Plants
-            </h3>
-            <div className="flex flex-wrap gap-6 max-lg:w-full max-lg:justify-center">
+          <section className="companions-section">
+            <h3>Companion Plants</h3>
+            <div className="companions-list">
               {eligibleCompanions.data &&
                 eligibleCompanions.data.length > 0 && (
                   <AddCompanion
@@ -142,17 +138,17 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               {companions.data?.map((companion: PlantCompanion) => (
                 <CompanionCard
                   key={companion.companion?.id}
-                  name={companion.companion?.name || ""}
-                  species={companion.companion?.species?.name || ""}
-                  notes={companion.notes || ""}
-                  id={companion.companion?.id || ""}
-                  companionId={companion.plant?.id || ""}
+                  name={companion.companion!.name}
+                  species={companion.companion!.species!.name}
+                  notes={companion.notes}
+                  id={companion.companion!.id}
+                  companionId={companion.plant!.id}
                 />
               ))}
             </div>
-          </div>
+          </section>
         </div>
-      </div>
+      </section>
     </main>
   );
 };

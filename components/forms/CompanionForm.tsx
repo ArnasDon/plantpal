@@ -55,14 +55,14 @@ const PlantForm = ({
     });
     if (result.success) {
       toast.custom(() => (
-        <div className="bg-primary shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-success">
           <h3 className="font-semibold">Companion added successfully</h3>
         </div>
       ));
       form.reset();
     } else {
       toast.custom(() => (
-        <div className="bg-destructive shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-error">
           <h3 className="font-semibold">Failed to add companion</h3>
           <p className="text-sm">{result.error as string}</p>
         </div>
@@ -81,10 +81,10 @@ const PlantForm = ({
               <FormLabel>Companion</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange}>
-                  <SelectTrigger className="bg-dark-200 border-dark-300 w-full focus-visible:ring-0 focus-visible:ring-offset-0">
+                  <SelectTrigger className="form-select">
                     <SelectValue placeholder="Select a plant" />
                   </SelectTrigger>
-                  <SelectContent className="bg-dark-200 border-dark-300">
+                  <SelectContent className="form-select-content">
                     {eligibleCompanions.map((plant) => (
                       <SelectItem key={plant.id} value={plant.id}>
                         {plant.name} - {plant.species?.name}

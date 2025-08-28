@@ -20,7 +20,7 @@ const AddCompanion = ({
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="bg-dark-300 shadow-plant-card border-dark-400 flex min-h-[220px] min-w-[210px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed">
+        <div className="add-companion-card">
           <Image
             src="/icons/plus.svg"
             alt="Add Companion"

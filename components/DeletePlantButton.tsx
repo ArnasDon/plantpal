@@ -14,10 +14,7 @@ const DeletePlantButton = ({ plantId }: { plantId: string }) => {
     }
   };
   return (
-    <Button
-      className="bg-dark-200 text-destructive-200 hover:bg-dark-200/80 cursor-pointer"
-      onClick={handleDelete}
-    >
+    <Button className="button-delete" onClick={handleDelete}>
       <Image src="/icons/trash.svg" alt="Delete" width={16} height={16} />
       <p>Delete plant</p>
     </Button>

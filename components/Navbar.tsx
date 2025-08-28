@@ -5,14 +5,12 @@ import LogoutButton from "./LogoutButton";
 
 const Navbar = () => {
   return (
-    <nav className="bg-dark-200 flex w-full items-center justify-between px-8 py-4">
+    <nav className="navbar">
       <Link href="/" className="flex cursor-pointer items-center gap-2">
         <Image src="/icons/logo.svg" alt="logo" width={30} height={30} />
-        <span className="font-fraunces text-xl font-semibold max-md:hidden">
-          PlantPal
-        </span>
+        <span className="navbar-logo max-md:hidden">PlantPal</span>
       </Link>
-      <div className="flex items-center gap-[30px]">
+      <div className="navbar-links">
         <Link href="/plants">My Plants</Link>
         <Link href="/plants/new">Add Plant</Link>
         <LogoutButton />

@@ -73,13 +73,13 @@ const CompanionCardContent = ({
     const result = await deletePlantCompanion(plantId, companionId, path);
     if (result.success) {
       toast.custom(() => (
-        <div className="bg-primary shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-success">
           <h3 className="font-semibold">Companion deleted successfully</h3>
         </div>
       ));
     } else {
       toast.custom(() => (
-        <div className="bg-destructive shadow-plant-card flex flex-col gap-4 overflow-hidden rounded-lg p-4">
+        <div className="toast-error">
           <h3 className="font-semibold">Failed to delete companion</h3>
           <p className="text-sm">{result.error as string}</p>
         </div>
@@ -88,7 +88,7 @@ const CompanionCardContent = ({
   };
   return (
     <Link href={`/plants/${id}`}>
-      <div className="bg-dark-300 shadow-plant-card border-dark-400 relative min-h-[220px] min-w-[210px] rounded-lg border-2 p-2">
+      <div className="companion-card">
         <Image
           src="/icons/cross.svg"
           alt="Delete"
@@ -102,7 +102,7 @@ const CompanionCardContent = ({
           }}
         />
         <div className="flex flex-col items-center gap-4">
-          <Badge className="bg-dark-400 text-light-200">{species}</Badge>
+          <Badge className="badge-species">{species}</Badge>
           <p className="font-fraunces text-2xl font-semibold">{name}</p>
           <Image
             src="/images/plant-default.png"

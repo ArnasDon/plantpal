@@ -21,11 +21,9 @@ const SignInCard = () => {
           height={36}
           className="size-9"
         />
-        <h2 className="font-fraunces text-3xl font-semibold">PlantPal</h2>
+        <h2>PlantPal</h2>
       </div>
-      <h2 className="font-fraunces text-3xl font-semibold">
-        Start Caring Smarter 🌱
-      </h2>
+      <h2>Start Caring Smarter 🌱</h2>
       <p className="text-light-200 font-onest text-center text-lg">
         Your plants will never miss a drink again. Sign in to start tracking
         care and watering schedules.

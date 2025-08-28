@@ -4,7 +4,7 @@ import React from "react";
 
 const NewPlant = async () => {
   return (
-    <div className="flex h-[calc(100vh-4.5rem)] flex-row">
+    <main className="form-section">
       <div className="w-1/2 max-lg:w-full">
         <PlantForm />
       </div>
@@ -17,7 +17,7 @@ const NewPlant = async () => {
           className="size-full object-cover"
         />
       </div>
-    </div>
+    </main>
   );
 };
 

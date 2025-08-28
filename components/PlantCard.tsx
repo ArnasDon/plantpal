@@ -24,20 +24,18 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
     <Link href={`/plants/${plant.id}`}>
       <div
         className={cn(
-          "bg-dark-200 shadow-plant-card relative flex flex-col gap-4 rounded-lg",
+          "plant-card",
           needsWatering && "border-destructive-200 border-2"
         )}
       >
         {needsWatering && (
-          <Badge className="bg-destructive-200 text-destructive-foreground absolute -top-3 right-3">
+          <Badge className="badge-water-today absolute -top-3 right-3">
             Water Today
           </Badge>
         )}
         <div className="flex flex-col gap-4 p-6">
-          <Badge className="bg-dark-400 text-light-200">
-            {plant.species?.name}
-          </Badge>
-          <h3 className="font-fraunces text-xl font-semibold">{plant.name}</h3>
+          <Badge className="badge-species">{plant.species?.name}</Badge>
+          <h3>{plant.name}</h3>
           {plant.daysSinceLastWatering !== null ? (
             <p className="text-dark-600">
               Days since last watered:{" "}
@@ -54,7 +52,7 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
             <HydrationStatus value={hydrationPercentage} />
             <WaterButton plantId={plant.id} />
           </div>
-          {/* isolate overflow only for plant image */}
+          {/* isolate overflow only for plant image to add a nice effect */}
           <div className="overflow-hidden">
             <Image
               src="/images/plant-default.png"
