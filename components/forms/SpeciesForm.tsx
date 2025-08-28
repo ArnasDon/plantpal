@@ -93,7 +93,7 @@ const SpeciesForm = ({
           <div className="space-y-2">
             <FormLabel>Tips</FormLabel>
             {tips.map((tip, index) => (
-              <div key={index} className="flex items-center gap-2 w-fit">
+              <div key={index} className="flex w-fit items-center gap-2">
                 <span className="flex-1">{tip}</span>
                 <button
                   className="cursor-pointer"
@@ -108,7 +108,7 @@ const SpeciesForm = ({
                 </button>
               </div>
             ))}
-            <div className="flex gap-2 items-end">
+            <div className="flex items-end gap-2">
               <Input
                 placeholder="e.g. Likes shady places"
                 value={tipInput}

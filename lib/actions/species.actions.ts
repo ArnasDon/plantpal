@@ -35,6 +35,7 @@ export const getSpeciesByName = async (name: string) => {
     });
     return species;
   } catch (error) {
+    console.error(error);
     return { error: "Failed to get species" };
   }
 };

@@ -12,7 +12,7 @@ const EditPlant = async ({ params }: { params: Promise<{ id: string }> }) => {
   }
 
   return (
-    <main className="flex flex-row h-[calc(100vh-4.5rem)]">
+    <main className="flex h-[calc(100vh-4.5rem)] flex-row">
       <div className="w-1/2 max-lg:w-full">
         <PlantForm plant={plant.data as Plant} />
       </div>

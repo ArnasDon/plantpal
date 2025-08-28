@@ -5,10 +5,10 @@ import LogoutButton from "./LogoutButton";
 
 const Navbar = () => {
   return (
-    <nav className="w-full bg-dark-200 flex justify-between items-center px-8 py-4">
-      <Link href="/" className="flex items-center gap-2 cursor-pointer">
+    <nav className="bg-dark-200 flex w-full items-center justify-between px-8 py-4">
+      <Link href="/" className="flex cursor-pointer items-center gap-2">
         <Image src="/icons/logo.svg" alt="logo" width={30} height={30} />
-        <span className="text-xl font-semibold font-fraunces max-md:hidden">
+        <span className="font-fraunces text-xl font-semibold max-md:hidden">
           PlantPal
         </span>
       </Link>

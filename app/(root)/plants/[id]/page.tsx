@@ -47,10 +47,10 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const careTips = JSON.parse(plant.data?.species?.tips || "[]");
 
   return (
-    <main className="flex flex-col gap-8 max-w-screen-2xl mx-auto py-12 px-12">
+    <main className="mx-auto flex max-w-screen-2xl flex-col gap-8 px-12 py-12">
       {/* Header */}
-      <div className="flex flex-row max-lg:flex-col max-lg:items-center justify-between gap-4">
-        <h2 className="text-4xl font-semibold font-fraunces">Plant Details</h2>
+      <div className="flex flex-row justify-between gap-4 max-lg:flex-col max-lg:items-center">
+        <h2 className="font-fraunces text-4xl font-semibold">Plant Details</h2>
         <div className="flex flex-row gap-4">
           <Link href={`/plants/${id}/edit`}>
             <Button className="bg-dark-200 text-light-200 hover:bg-dark-200/80 cursor-pointer">
@@ -61,11 +61,11 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <DeletePlantButton plantId={id} />
         </div>
       </div>
-      <div className="flex flex-row max-lg:flex-col max-lg:items-center items-start gap-12">
+      <div className="flex flex-row items-start gap-12 max-lg:flex-col max-lg:items-center">
         <div className="flex flex-col gap-4">
           <div
             className={cn(
-              "relative rounded-lg p-5 bg-dark-200 shadow-plant-card border-2 border-dark-300",
+              "bg-dark-200 shadow-plant-card border-dark-300 relative rounded-lg border-2 p-5",
               needsWatering && "border-destructive-200 border-2"
             )}
           >
@@ -79,14 +79,14 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               alt="Plant"
               width={500}
               height={500}
-              className="min-w-[500px] min-h-[500px] object-cover max-lg:min-w-[300px] max-lg:min-h-[300px]"
+              className="min-h-[500px] min-w-[500px] object-cover max-lg:min-h-[300px] max-lg:min-w-[300px]"
             />
           </div>
           <div className="flex flex-col gap-4">
             {plant.data?.notes && (
               <div className="flex flex-col gap-4">
-                <h3 className="text-xl font-semibold font-fraunces">Notes</h3>
-                <p className="text-lg text-dark-600">{plant.data?.notes}</p>
+                <h3 className="font-fraunces text-xl font-semibold">Notes</h3>
+                <p className="text-dark-600 text-lg">{plant.data?.notes}</p>
               </div>
             )}
           </div>
@@ -97,13 +97,13 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               {plant.data?.species?.name}
             </Badge>
             <div className="flex flex-row gap-4 max-lg:w-full max-lg:justify-between">
-              <h2 className="text-4xl font-semibold font-fraunces">
+              <h2 className="font-fraunces text-4xl font-semibold">
                 {plant.data?.name}
               </h2>
               <WaterButton plantId={plant.data!.id} />
             </div>
             {plant.data?.daysSinceLastWatering !== null && (
-              <p className="text-lg text-dark-600">
+              <p className="text-dark-600 text-lg">
                 Days since last watered:{" "}
                 <span className="text-white">
                   {plant.data?.daysSinceLastWatering} Days
@@ -114,11 +114,11 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </div>
 
           <div className="flex flex-col gap-6">
-            <h3 className="text-xl font-semibold font-fraunces">Care Tips</h3>
+            <h3 className="font-fraunces text-xl font-semibold">Care Tips</h3>
             {careTips.length > 0 ? (
-              <ul className="list-disc list-inside space-y-3">
+              <ul className="list-inside list-disc space-y-3">
                 {careTips.map((tip: string) => (
-                  <li key={tip} className="text-lg text-light-200">
+                  <li key={tip} className="text-light-200 text-lg">
                     {tip}
                   </li>
                 ))}
@@ -128,7 +128,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           </div>
           <div className="flex flex-col gap-6 max-lg:w-full max-lg:items-center">
-            <h3 className="text-xl font-semibold font-fraunces">
+            <h3 className="font-fraunces text-xl font-semibold">
               Companion Plants
             </h3>
             <div className="flex flex-wrap gap-6 max-lg:w-full max-lg:justify-center">

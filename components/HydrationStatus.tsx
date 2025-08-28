@@ -17,13 +17,13 @@ const HydrationStatus: React.FC<HydrationStatusProps> = ({
   return (
     <div className={`flex flex-col gap-2 ${className}`}>
       {showPercentage && (
-        <div className="text-white text-sm">
+        <div className="text-sm text-white">
           Hydration Status: <span className="font-bold">{clampedValue}%</span>
         </div>
       )}
-      <div className="w-full bg-dark-400 rounded-full h-2 overflow-hidden">
+      <div className="bg-dark-400 h-2 w-full overflow-hidden rounded-full">
         <div
-          className="h-full bg-progress transition-all duration-300 ease-out"
+          className="bg-progress h-full transition-all duration-300 ease-out"
           style={{ width: `${clampedValue}%` }}
         />
       </div>

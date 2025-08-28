@@ -24,7 +24,7 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
     <Link href={`/plants/${plant.id}`}>
       <div
         className={cn(
-          "relative bg-dark-200 rounded-lg shadow-plant-card flex flex-col gap-4",
+          "bg-dark-200 shadow-plant-card relative flex flex-col gap-4 rounded-lg",
           needsWatering && "border-destructive-200 border-2"
         )}
       >
@@ -37,7 +37,7 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
           <Badge className="bg-dark-400 text-light-200">
             {plant.species?.name}
           </Badge>
-          <h3 className="text-xl font-semibold font-fraunces">{plant.name}</h3>
+          <h3 className="font-fraunces text-xl font-semibold">{plant.name}</h3>
           {plant.daysSinceLastWatering !== null ? (
             <p className="text-dark-600">
               Days since last watered:{" "}
@@ -50,7 +50,7 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
           )}
         </div>
         <div className="flex flex-row pl-6">
-          <div className="flex flex-col gap-12 justify-end mb-6">
+          <div className="mb-6 flex flex-col justify-end gap-12">
             <HydrationStatus value={hydrationPercentage} />
             <WaterButton plantId={plant.id} />
           </div>
@@ -61,7 +61,7 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
               alt="Plant"
               width={160}
               height={200}
-              className="self-end -mb-20 -mr-5"
+              className="-mr-5 -mb-20 self-end"
             />
           </div>
         </div>

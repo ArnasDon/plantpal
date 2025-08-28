@@ -14,7 +14,7 @@ const MyPlants = async () => {
   }
   const plants = await getUserPlants();
   return (
-    <main className="flex flex-col gap-8 items-center justify-center py-12 max-w-7xl mx-auto overflow-hidden">
+    <main className="mx-auto flex max-w-7xl flex-col items-center justify-center gap-8 overflow-hidden py-12">
       <Hero />
       <div className="flex flex-wrap items-start justify-center gap-4">
         {plants.data &&
@@ -24,13 +24,13 @@ const MyPlants = async () => {
           ))}
         {plants.data && plants.data.length === 0 && (
           <div className="flex flex-col items-center justify-center gap-4">
-            <h2 className="text-2xl font-semibold font-fraunces">
+            <h2 className="font-fraunces text-2xl font-semibold">
               No plants added yet.
             </h2>
             <p className="text-light-200">Add a plant to get started.</p>
             <Link href="/plants/new">
-              <Button className="px-8 py-6 cursor-pointer">
-                <h2 className="font-semibold text-2xl">Add a plant</h2>
+              <Button className="cursor-pointer px-8 py-6">
+                <h2 className="text-2xl font-semibold">Add a plant</h2>
               </Button>
             </Link>
           </div>

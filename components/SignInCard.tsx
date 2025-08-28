@@ -12,8 +12,8 @@ const SignInCard = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-dark-200 rounded-xl gap-8 shadow-card py-10 px-8 max-w-[500px]">
-      <div className="flex items-center gap-2 mb-2">
+    <div className="bg-dark-200 shadow-card flex max-w-[500px] flex-col items-center justify-center gap-8 rounded-xl px-8 py-10">
+      <div className="mb-2 flex items-center gap-2">
         <Image
           src="/icons/logo.svg"
           alt="logo"
@@ -21,18 +21,18 @@ const SignInCard = () => {
           height={36}
           className="size-9"
         />
-        <h2 className="text-3xl font-semibold font-fraunces">PlantPal</h2>
+        <h2 className="font-fraunces text-3xl font-semibold">PlantPal</h2>
       </div>
-      <h2 className="text-3xl font-semibold font-fraunces">
+      <h2 className="font-fraunces text-3xl font-semibold">
         Start Caring Smarter 🌱
       </h2>
-      <p className="text-light-200 text-lg font-onest text-center">
+      <p className="text-light-200 font-onest text-center text-lg">
         Your plants will never miss a drink again. Sign in to start tracking
         care and watering schedules.
       </p>
       <button
         onClick={handleSignIn}
-        className="bg-primary text-light-100 px-4 py-2 rounded-md flex items-center gap-2 shadow-button cursor-pointer hover:bg-primary/80 transition-all duration-300"
+        className="bg-primary text-light-100 shadow-button hover:bg-primary/80 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 transition-all duration-300"
       >
         <Image
           src="/icons/google.svg"
@@ -41,7 +41,7 @@ const SignInCard = () => {
           height={14}
           className="size-3.5"
         />
-        <span className="text-lg font-onest font-semibold">
+        <span className="font-onest text-lg font-semibold">
           Sign in with Google
         </span>
       </button>

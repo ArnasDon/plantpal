@@ -20,7 +20,7 @@ const AddCompanion = ({
   return (
     <Dialog>
       <DialogTrigger>
-        <div className="flex items-center justify-center bg-dark-300 rounded-lg shadow-plant-card border-2 border-dashed border-dark-400 min-w-[210px] min-h-[220px] cursor-pointer">
+        <div className="bg-dark-300 shadow-plant-card border-dark-400 flex min-h-[220px] min-w-[210px] cursor-pointer items-center justify-center rounded-lg border-2 border-dashed">
           <Image
             src="/icons/plus.svg"
             alt="Add Companion"
@@ -32,7 +32,7 @@ const AddCompanion = ({
       </DialogTrigger>
       <DialogContent className="bg-dark-100 border-dark-300 shadow-card">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold font-fraunces">
+          <DialogTitle className="font-fraunces text-2xl font-semibold">
             Add Companion
           </DialogTitle>
         </DialogHeader>

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="relative flex flex-col items-center justify-center bg-dark-200 rounded-lg border-[2px] border-white/27 mx-20 py-12 max-md:mx-4 max-md:w-full max-md:px-2">
+    <div className="bg-dark-200 relative mx-20 flex flex-col items-center justify-center rounded-lg border-[2px] border-white/27 py-12 max-md:mx-4 max-md:w-full max-md:px-2">
       {/* Top leaf */}
       <Image
         src="/images/leaves.png"
@@ -14,11 +14,11 @@ const Hero = () => {
       />
 
       {/* Center text */}
-      <div className="flex flex-col items-center justify-center max-w-2xl mx-40 gap-4  max-md:w-full max-md:mx-4">
-        <h1 className="text-5xl font-semibold font-fraunces text-center ">
+      <div className="mx-40 flex max-w-2xl flex-col items-center justify-center gap-4 max-md:mx-4 max-md:w-full">
+        <h1 className="font-fraunces text-center text-5xl font-semibold">
           Keep Your Plants Happy, One Sip at a Time 🌿
         </h1>
-        <p className="text-dark-600 text-center mt-2">
+        <p className="text-dark-600 mt-2 text-center">
           Track schedules and keep your plants in great shape.
         </p>
       </div>
@@ -38,7 +38,7 @@ const Hero = () => {
         alt="Plant Right"
         width={373}
         height={374}
-        className="absolute -bottom-26 -right-30 max-md:hidden"
+        className="absolute -right-30 -bottom-26 max-md:hidden"
       />
     </div>
   );

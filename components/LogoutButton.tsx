@@ -13,7 +13,7 @@ const LogoutButton = () => {
   return (
     <button
       onClick={handleLogout}
-      className="bg-destructive  px-4 py-2 rounded-md flex items-center gap-2 shadow-button cursor-pointer hover:bg-destructive/80 transition-all duration-300"
+      className="bg-destructive shadow-button hover:bg-destructive/80 flex cursor-pointer items-center gap-2 rounded-md px-4 py-2 transition-all duration-300"
     >
       Logout
     </button>

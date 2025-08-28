@@ -10,7 +10,30 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...compat.extends(
+    "next/core-web-vitals",
+    "next/typescript",
+    "plugin:prettier/recommended"
+  ),
+  {
+    rules: {
+      "prettier/prettier": [
+        "error",
+        {
+          trailingComma: "es5",
+          semi: true,
+          tabWidth: 2,
+          printWidth: 80,
+          endOfLine: "auto",
+          arrowParens: "always",
+          plugins: ["prettier-plugin-tailwindcss"],
+        },
+        {
+          usePrettierrc: false,
+        },
+      ],
+    },
+  },
   {
     ignores: [
       "node_modules/**",
@@ -18,6 +41,7 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      "components/ui/**",
     ],
   },
 ];
