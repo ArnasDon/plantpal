@@ -25,6 +25,23 @@ export const createPlant = async (formData: PlantForm) => {
   return { success: true, data: plant };
 };
 
+export const updatePlant = async (plantId: string, formData: PlantForm) => {
+  try {
+    const user = await getUser();
+    if (!user) {
+      return { error: "User not found" };
+    }
+    const userId = user.id;
+    const plant = await prisma.plant.update({
+      where: { id: plantId, userId: userId },
+      data: formData,
+    });
+    return { success: true, data: plant };
+  } catch (error) {
+    return { success: false, error: error as string };
+  }
+};
+
 export const getUserPlants = async () => {
   try {
     const user = await getUser();
@@ -34,6 +51,7 @@ export const getUserPlants = async () => {
       include: {
         species: true,
       },
+      orderBy: { createdAt: "asc" },
     });
 
     const plantsWithHydration = await Promise.all(

@@ -46,9 +46,9 @@ const SpeciesForm = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("submitting");
+    // console.log("submitting");
     values.tips = tips;
-    console.log(values);
+    // console.log(values);
     const result = await createSpecies(values);
     if (result.success) {
       fetchSpecies();

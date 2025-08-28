@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { createPlant } from "@/lib/actions/plant.actions";
+import { createPlant, updatePlant } from "@/lib/actions/plant.actions";
 import {
   Select,
   SelectContent,
@@ -36,7 +36,7 @@ const formSchema = z.object({
   wateringFrequencyOverride: z.number().optional(),
 });
 
-const PlantForm = () => {
+const PlantForm = ({ plant }: { plant?: Plant }) => {
   const [species, setSpecies] = useState<Species[]>([]);
 
   const fetchSpecies = async () => {
@@ -52,39 +52,66 @@ const PlantForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      speciesId: "",
-      name: "",
-      notes: undefined,
-      wateringFrequencyOverride: 0,
+      speciesId: plant?.speciesId || "",
+      name: plant?.name || "",
+      notes: plant?.notes || "",
+      wateringFrequencyOverride: plant?.wateringFrequencyOverride || 0,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("submitting");
     console.log(values);
-    const result = await createPlant(values);
-    if (result.success) {
-      console.log("plant created");
-      console.log(result.data);
-      toast.custom(() => (
-        <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
-          <h3 className="font-semibold">Plant created successfully</h3>
-        </div>
-      ));
-      redirect(`/plants/${result.data.id}`);
+
+    if (plant) {
+      const result = await updatePlant(plant.id, values);
+      if (result.success) {
+        toast.custom(() => (
+          <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+            <h3 className="font-semibold">Plant updated successfully</h3>
+          </div>
+        ));
+        redirect(`/plants/${plant.id}`);
+      } else {
+        toast.custom(() => (
+          <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+            <h3 className="font-semibold">Plant update failed</h3>
+            <p className="text-sm">{result.error}</p>
+          </div>
+        ));
+      }
     } else {
-      toast.custom(() => (
-        <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
-          <h3 className="font-semibold">Plant creation failed</h3>
-          <p className="text-sm">{result.error}</p>
-        </div>
-      ));
+      const result = await createPlant(values);
+      if (result.success) {
+        console.log("plant created");
+        console.log(result.data);
+        toast.custom(() => (
+          <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+            <h3 className="font-semibold">Plant created successfully</h3>
+          </div>
+        ));
+        redirect(`/plants/${result.data.id}`);
+      } else {
+        toast.custom(() => (
+          <div className="bg-destructive rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
+            <h3 className="font-semibold">Plant creation failed</h3>
+            <p className="text-sm">{result.error}</p>
+          </div>
+        ));
+      }
     }
   };
 
   return (
-    <div className="px-20 py-8 max-w-[700px] mx-auto flex flex-col gap-8">
-      <h2 className="text-2xl font-bold">Add a new plant species</h2>
+    <div className="px-20 py-8 max-w-[700px] mx-auto flex flex-col gap-12">
+      <div className="flex flex-col gap-6">
+        <h2 className="text-4xl font-semibold font-fraunces">
+          {plant ? "Edit Plant" : "Add a new plant"}
+        </h2>
+        <p className="text-light-200">
+          Keep track of your plants and give them the care they deserve.
+        </p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -186,7 +213,7 @@ const PlantForm = () => {
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            Save Plant
+            {plant ? "Edit Plant" : "Save Plant"}
           </Button>
         </form>
       </Form>

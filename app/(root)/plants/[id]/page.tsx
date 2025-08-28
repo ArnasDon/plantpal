@@ -12,6 +12,7 @@ import CompanionCard from "@/components/CompanionCard";
 import AddCompanion from "@/components/AddCompanion";
 import { getEligibleCompanions } from "@/lib/actions/companion.actions";
 import WaterButton from "@/components/WaterButton";
+import Link from "next/link";
 
 const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await getUser();
@@ -24,7 +25,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const userPlants = await getUserPlants();
 
   const companions = await getPlantCompanions(id);
-  console.log(companions.data);
+  // console.log(companions.data);
   const eligibleCompanions = await getEligibleCompanions(id);
   if (!plant.success || !userPlants.success || !eligibleCompanions.success) {
     redirect("/plants");
@@ -50,10 +51,12 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       <div className="flex flex-row  justify-between gap-4">
         <h2 className="text-4xl font-semibold font-fraunces">Plant Details</h2>
         <div className="flex flex-row gap-4">
-          <Button className="bg-dark-200 text-light-200 hover:bg-dark-200/80 cursor-pointer">
-            <Image src="/icons/edit.svg" alt="Edit" width={16} height={16} />
-            <p>Edit plant</p>
-          </Button>
+          <Link href={`/plants/${id}/edit`}>
+            <Button className="bg-dark-200 text-light-200 hover:bg-dark-200/80 cursor-pointer">
+              <Image src="/icons/edit.svg" alt="Edit" width={16} height={16} />
+              <p>Edit plant</p>
+            </Button>
+          </Link>
           <Button className="bg-dark-200 text-destructive-200 hover:bg-dark-200/80 cursor-pointer">
             <Image src="/icons/trash.svg" alt="Delete" width={16} height={16} />
             <p>Delete plant</p>
