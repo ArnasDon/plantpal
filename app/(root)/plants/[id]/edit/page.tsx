@@ -13,10 +13,10 @@ const EditPlant = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <main className="flex flex-row h-[calc(100vh-4.5rem)]">
-      <div className="w-1/2 max-md:w-full">
+      <div className="w-1/2 max-lg:w-full">
         <PlantForm plant={plant.data as Plant} />
       </div>
-      <div className="w-1/2 items-center justify-center max-md:hidden">
+      <div className="w-1/2 items-center justify-center max-lg:hidden">
         <Image
           src="/images/form-bg2.png"
           alt="plant"

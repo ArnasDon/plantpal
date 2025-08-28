@@ -46,9 +46,7 @@ const SpeciesForm = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log("submitting");
     values.tips = tips;
-    // console.log(values);
     const result = await createSpecies(values);
     if (result.success) {
       fetchSpecies();
@@ -70,7 +68,7 @@ const SpeciesForm = ({
   };
 
   return (
-    <div className="flex flex-col gap-8 px-12 py-8">
+    <div className="flex flex-col gap-8 px-12 py-8 max-md:px-2">
       <h2 className="text-2xl font-bold">Add a new plant species</h2>
       {error && <p className="text-red-500">{error}</p>}
       <Form {...form}>

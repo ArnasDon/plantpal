@@ -19,7 +19,6 @@ export const createSpecies = async (formData: SpeciesForm) => {
 
     return { success: true, data: newSpecies };
   } catch (error) {
-    console.error(error);
     return { success: false, error: error };
   }
 };
@@ -36,7 +35,6 @@ export const getSpeciesByName = async (name: string) => {
     });
     return species;
   } catch (error) {
-    console.error(error);
     return { error: "Failed to get species" };
   }
 };

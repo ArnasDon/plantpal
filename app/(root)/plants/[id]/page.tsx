@@ -26,7 +26,6 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const userPlants = await getUserPlants();
 
   const companions = await getPlantCompanions(id);
-  // console.log(companions.data);
   const eligibleCompanions = await getEligibleCompanions(id);
   if (!plant.success || !userPlants.success || !eligibleCompanions.success) {
     redirect("/plants");
@@ -49,7 +48,8 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <main className="flex flex-col gap-8 max-w-screen-2xl mx-auto py-12 px-12">
-      <div className="flex flex-row  justify-between gap-4">
+      {/* Header */}
+      <div className="flex flex-row max-lg:flex-col max-lg:items-center justify-between gap-4">
         <h2 className="text-4xl font-semibold font-fraunces">Plant Details</h2>
         <div className="flex flex-row gap-4">
           <Link href={`/plants/${id}/edit`}>
@@ -61,7 +61,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <DeletePlantButton plantId={id} />
         </div>
       </div>
-      <div className="flex flex-row items-start gap-12">
+      <div className="flex flex-row max-lg:flex-col max-lg:items-center items-start gap-12">
         <div className="flex flex-col gap-4">
           <div
             className={cn(
@@ -79,7 +79,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               alt="Plant"
               width={500}
               height={500}
-              className="min-w-[500px] min-h-[500px] object-cover"
+              className="min-w-[500px] min-h-[500px] object-cover max-lg:min-w-[300px] max-lg:min-h-[300px]"
             />
           </div>
           <div className="flex flex-col gap-4">
@@ -96,7 +96,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <Badge className="bg-dark-400 text-light-200 text-md">
               {plant.data?.species?.name}
             </Badge>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 max-lg:w-full max-lg:justify-between">
               <h2 className="text-4xl font-semibold font-fraunces">
                 {plant.data?.name}
               </h2>
@@ -127,11 +127,11 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <p>No care tips available</p>
             )}
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-6 max-lg:w-full max-lg:items-center">
             <h3 className="text-xl font-semibold font-fraunces">
               Companion Plants
             </h3>
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-6 max-lg:w-full max-lg:justify-center">
               {eligibleCompanions.data &&
                 eligibleCompanions.data.length > 0 && (
                   <AddCompanion

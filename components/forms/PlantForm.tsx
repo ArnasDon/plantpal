@@ -60,9 +60,6 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("submitting");
-    console.log(values);
-
     if (plant) {
       const result = await updatePlant(plant.id, values);
       if (result.success) {
@@ -83,8 +80,6 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
     } else {
       const result = await createPlant(values);
       if (result.success) {
-        console.log("plant created");
-        console.log(result.data);
         toast.custom(() => (
           <div className="bg-primary rounded-lg p-4 shadow-plant-card flex flex-col gap-4 overflow-hidden">
             <h3 className="font-semibold">Plant created successfully</h3>
@@ -103,7 +98,7 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
   };
 
   return (
-    <div className="px-20 py-8 max-w-[700px] mx-auto flex flex-col gap-12">
+    <div className="px-20 py-8 max-w-[700px] mx-auto flex flex-col gap-12 max-md:px-4">
       <div className="flex flex-col gap-6">
         <h2 className="text-4xl font-semibold font-fraunces">
           {plant ? "Edit Plant" : "Add a new plant"}

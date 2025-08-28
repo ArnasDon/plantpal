@@ -8,7 +8,9 @@ const Navbar = () => {
     <nav className="w-full bg-dark-200 flex justify-between items-center px-8 py-4">
       <Link href="/" className="flex items-center gap-2 cursor-pointer">
         <Image src="/icons/logo.svg" alt="logo" width={30} height={30} />
-        <span className="text-xl font-semibold font-fraunces">PlantPal</span>
+        <span className="text-xl font-semibold font-fraunces max-md:hidden">
+          PlantPal
+        </span>
       </Link>
       <div className="flex items-center gap-[30px]">
         <Link href="/plants">My Plants</Link>

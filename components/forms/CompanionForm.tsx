@@ -47,8 +47,6 @@ const PlantForm = ({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log("submitting");
-    // console.log(values);
     const result = await addPlantCompanion({
       plantId: values.plantId,
       companionId: values.companionId,
@@ -69,7 +67,6 @@ const PlantForm = ({
           <p className="text-sm">{result.error as string}</p>
         </div>
       ));
-      console.log(result.error);
     }
   };
 

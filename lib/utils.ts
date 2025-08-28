@@ -14,7 +14,6 @@ export const getHydrationPercentage = (
   }
   const percentage = 100 - (daysSinceLastWatering / wateringFrequency) * 100;
   const percentageFixed = Math.round(percentage);
-  console.log("Function: Percentage: ", percentageFixed);
   return percentageFixed;
 };
 
