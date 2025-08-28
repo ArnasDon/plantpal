@@ -97,7 +97,10 @@ const SpeciesForm = ({
             {tips.map((tip, index) => (
               <div key={index} className="flex items-center gap-2 w-fit">
                 <span className="flex-1">{tip}</span>
-                <button onClick={() => handleRemoveTip(index)}>
+                <button
+                  className="cursor-pointer"
+                  onClick={() => handleRemoveTip(index)}
+                >
                   <Image
                     src="/icons/trash.svg"
                     alt="Close"
@@ -114,7 +117,11 @@ const SpeciesForm = ({
                 onChange={(e) => setTipInput(e.target.value)}
                 className="bg-dark-200 border-dark-300"
               />
-              <Button type="button" onClick={handleAddTip}>
+              <Button
+                type="button"
+                className="cursor-pointer"
+                onClick={handleAddTip}
+              >
                 Add Tip
               </Button>
               <FormMessage />
@@ -140,7 +147,9 @@ const SpeciesForm = ({
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="cursor-pointer">
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

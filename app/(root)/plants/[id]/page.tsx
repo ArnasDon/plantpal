@@ -36,7 +36,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (plant.data?.daysSinceLastWatering !== null) {
     hydrationPercentage = getHydrationPercentage(
-      plant.data?.daysSinceLastWatering || 0,
+      plant.data?.daysSinceLastWatering || -1,
       plant.data?.wateringFrequencyOverride ||
         plant.data?.species?.wateringFrequencyDays ||
         0

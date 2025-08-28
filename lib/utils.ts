@@ -13,5 +13,29 @@ export const getHydrationPercentage = (
     return 0;
   }
   const percentage = 100 - (daysSinceLastWatering / wateringFrequency) * 100;
-  return Math.min(100, Math.max(0, percentage)).toFixed(0) as unknown as number;
+  const percentageFixed = Math.round(percentage);
+  console.log("Function: Percentage: ", percentageFixed);
+  return percentageFixed;
+};
+
+export const getThirstyPlants = (plants: Plant[], percentage: number) => {
+  const thirstyPlants = plants
+    ?.map((plant: Plant) => {
+      const wateringFrequency =
+        plant.wateringFrequencyOverride ??
+        plant.species?.wateringFrequencyDays ??
+        0;
+
+      const hydrationPercentage = getHydrationPercentage(
+        plant.daysSinceLastWatering ?? -1,
+        wateringFrequency
+      );
+
+      return { plant, hydrationPercentage };
+    })
+    .filter(({ hydrationPercentage }) => hydrationPercentage < percentage)
+    .sort((a, b) => a.hydrationPercentage - b.hydrationPercentage)
+    .map(({ plant }) => plant);
+
+  return thirstyPlants;
 };

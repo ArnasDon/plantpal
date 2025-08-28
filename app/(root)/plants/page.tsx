@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import React from "react";
 import PlantCard from "@/components/PlantCard";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const MyPlants = async () => {
   const user = await getUser();
@@ -40,7 +42,7 @@ const MyPlants = async () => {
           alt="Plant Left"
           width={363}
           height={392}
-          className="absolute -bottom-3 -left-35"
+          className="absolute -bottom-5 -left-35"
         />
 
         {/* Right plant */}
@@ -49,13 +51,28 @@ const MyPlants = async () => {
           alt="Plant Right"
           width={373}
           height={374}
-          className="absolute -bottom-25 -right-30"
+          className="absolute -bottom-26 -right-30"
         />
       </div>
       <div className="flex flex-wrap items-start justify-center gap-4">
-        {plants?.data?.map((plant: Plant) => (
-          <PlantCard key={plant.id} plant={plant} />
-        ))}
+        {plants.data &&
+          plants.data.length > 0 &&
+          plants.data.map((plant: Plant) => (
+            <PlantCard key={plant.id} plant={plant} />
+          ))}
+        {plants.data && plants.data.length === 0 && (
+          <div className="flex flex-col items-center justify-center gap-4">
+            <h2 className="text-2xl font-semibold font-fraunces">
+              No plants added yet.
+            </h2>
+            <p className="text-light-200">Add a plant to get started.</p>
+            <Link href="/plants/new">
+              <Button className="px-8 py-6 cursor-pointer">
+                <h2 className="font-semibold text-2xl">Add a plant</h2>
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
     </main>
   );

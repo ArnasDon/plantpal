@@ -167,7 +167,12 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
                     </Select>
                   </FormControl>
 
-                  <Button onClick={() => setIsOpen(true)}>New Species</Button>
+                  <Button
+                    className="cursor-pointer"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    New Species
+                  </Button>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -209,7 +214,7 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
             )}
           />
           <Button
-            className="w-full"
+            className="w-full cursor-pointer"
             type="submit"
             disabled={form.formState.isSubmitting}
           >
