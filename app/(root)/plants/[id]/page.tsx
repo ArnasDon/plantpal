@@ -13,6 +13,7 @@ import AddCompanion from "@/components/AddCompanion";
 import { getEligibleCompanions } from "@/lib/actions/companion.actions";
 import WaterButton from "@/components/WaterButton";
 import Link from "next/link";
+import DeletePlantButton from "@/components/DeletePlantButton";
 
 const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await getUser();
@@ -57,10 +58,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <p>Edit plant</p>
             </Button>
           </Link>
-          <Button className="bg-dark-200 text-destructive-200 hover:bg-dark-200/80 cursor-pointer">
-            <Image src="/icons/trash.svg" alt="Delete" width={16} height={16} />
-            <p>Delete plant</p>
-          </Button>
+          <DeletePlantButton plantId={id} />
         </div>
       </div>
       <div className="flex flex-row items-start gap-12">

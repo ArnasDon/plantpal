@@ -142,3 +142,20 @@ export const getDaysSinceLastWatering = async (plantId: string) => {
 
   return daysSinceLastWatering;
 };
+
+export const deletePlant = async (plantId: string) => {
+  try {
+    const user = await getUser();
+    if (!user) {
+      return { error: "User not found" };
+    }
+    const userId = user.id;
+
+    const plant = await prisma.plant.delete({
+      where: { id: plantId, userId: userId },
+    });
+    return { success: true, data: plant };
+  } catch (error) {
+    return { success: false, error: error as string };
+  }
+};
