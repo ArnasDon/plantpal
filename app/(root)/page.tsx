@@ -3,10 +3,9 @@ import { getUser } from "@/lib/actions/auth.actions";
 import { redirect } from "next/navigation";
 import React from "react";
 import { getUserPlants } from "@/lib/actions/plant.actions";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { getThirstyPlants } from "@/lib/utils";
 import Hero from "@/components/Hero";
+import EmptyState from "@/components/EmptyState";
 
 const HomePage = async () => {
   const user = await getUser();
@@ -23,29 +22,20 @@ const HomePage = async () => {
 
   return (
     <main className="page-container">
-      {/* Hero */}
       <Hero />
       <section className="plants-section">
-        {thirstyPlants && thirstyPlants.length > 0 ? (
-          thirstyPlants.map((plant: Plant) => (
-            <PlantCard key={plant.id} plant={plant} />
-          ))
+        {plants.data && plants.data.length === 0 ? (
+          <EmptyState type="none" />
         ) : (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <h2>There are no thirsty plants 🪴</h2>
-            <p className="text-light-200">All your plants are doing great!</p>
-          </div>
-        )}
-        {plants.data && plants.data.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <h2>No plants added yet.</h2>
-            <p className="text-light-200">Add a plant to get started.</p>
-            <Link href="/plants/new">
-              <Button className="button-big">
-                <h3 className="text-2xl font-semibold">Add a plant</h3>
-              </Button>
-            </Link>
-          </div>
+          <>
+            {thirstyPlants && thirstyPlants.length > 0 ? (
+              thirstyPlants.map((plant: Plant) => (
+                <PlantCard key={plant.id} plant={plant} />
+              ))
+            ) : (
+              <EmptyState type="thirsty" />
+            )}
+          </>
         )}
       </section>
     </main>

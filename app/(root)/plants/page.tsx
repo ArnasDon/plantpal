@@ -3,9 +3,8 @@ import { getUser } from "@/lib/actions/auth.actions";
 import { redirect } from "next/navigation";
 import React from "react";
 import PlantCard from "@/components/PlantCard";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Hero from "@/components/Hero";
+import EmptyState from "@/components/EmptyState";
 
 const MyPlants = async () => {
   const user = await getUser();
@@ -17,21 +16,12 @@ const MyPlants = async () => {
     <main className="page-container">
       <Hero />
       <section className="plants-section">
-        {plants.data &&
-          plants.data.length > 0 &&
+        {plants.data && plants.data.length > 0 ? (
           plants.data.map((plant: Plant) => (
             <PlantCard key={plant.id} plant={plant} />
-          ))}
-        {plants.data && plants.data.length === 0 && (
-          <div className="flex flex-col items-center justify-center gap-4">
-            <h2>No plants added yet.</h2>
-            <p className="text-light-200">Add a plant to get started.</p>
-            <Link href="/plants/new">
-              <Button className="button-big">
-                <h2 className="text-2xl font-semibold">Add a plant</h2>
-              </Button>
-            </Link>
-          </div>
+          ))
+        ) : (
+          <EmptyState type="none" />
         )}
       </section>
     </main>
