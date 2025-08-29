@@ -23,12 +23,12 @@ const EmptyState = ({ type }: { type: "none" | "thirsty" }) => {
         width={214}
         height={204}
       />
-      <div className="flex flex-col items-center justify-center gap-4 text-center">
+      <div className="flex flex-col items-center justify-center gap-4 px-2 text-center">
         <h2>{EmptyStateConsts[type].title}</h2>
         <p className="text-light-200">{EmptyStateConsts[type].description}</p>
         {type === "none" && (
-          <Link href="/plants/new">
-            <Button className="button-big px-26 py-5">
+          <Link href="/plants/new" className="w-full">
+            <Button className="button-big w-full py-5">
               <Image
                 src="/icons/add.svg"
                 alt="Add"
