@@ -42,8 +42,6 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     );
   }
 
-  console.log("hydrationPercentage", hydrationPercentage);
-
   const needsWatering = hydrationPercentage < 1;
 
   const careTips = JSON.parse(plant.data?.species?.tips || "[]");
@@ -63,8 +61,10 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <DeletePlantButton plantId={id} />
         </div>
       </div>
+      {/* Main section */}
       <section className="plant-details-section">
-        <div className="flex flex-col gap-4">
+        {/* Left side */}
+        <div className="flex w-2/5 flex-col items-center gap-4 max-lg:w-full">
           <div
             className={cn(
               "plant-details-image",
@@ -81,19 +81,20 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               alt="Plant"
               width={500}
               height={500}
-              className="min-h-[500px] min-w-[500px] object-cover max-lg:min-h-[300px] max-lg:min-w-[300px]"
+              className="object-cover"
             />
           </div>
           <div className="plant-details-notes">
             {plant.data?.notes && (
               <div className="plant-details-notes">
                 <h3>Notes</h3>
-                <p className="text-dark-600 text-lg">{plant.data?.notes}</p>
+                <p className="text-light-200 text-lg">{plant.data?.notes}</p>
               </div>
             )}
           </div>
         </div>
-        <div className="flex flex-col gap-10">
+        {/* Right side */}
+        <div className="flex w-3/5 flex-col gap-10 max-lg:w-full">
           <div className="flex flex-col gap-6">
             <Badge className="badge-species text-md">
               {plant.data?.species?.name}
@@ -103,7 +104,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               <WaterButton plantId={plant.data!.id} />
             </div>
             {plant.data?.daysSinceLastWatering !== null && (
-              <p className="text-dark-600 text-lg">
+              <p className="text-light-200 text-lg">
                 Days since last watered:{" "}
                 <span className="text-white">
                   {plant.data?.daysSinceLastWatering} Days
