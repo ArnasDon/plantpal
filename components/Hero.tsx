@@ -16,7 +16,7 @@ const Hero = () => {
       {/* Center text */}
       <div className="hero-text-container">
         <h1>Keep Your Plants Happy, One Sip at a Time 🌿</h1>
-        <p className="text-dark-600 mt-2 text-center">
+        <p className="text-light-200 mt-2 text-center">
           Track schedules and keep your plants in great shape.
         </p>
       </div>
