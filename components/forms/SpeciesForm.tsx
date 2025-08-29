@@ -78,7 +78,7 @@ const SpeciesForm = ({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-light-200">Species Name</FormLabel>
+                <FormLabel>Species Name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="e.g. Peace Lily"
@@ -95,9 +95,7 @@ const SpeciesForm = ({
             name="wateringFrequencyDays"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-light-200">
-                  Watering Frequency (days)
-                </FormLabel>
+                <FormLabel>Watering Frequency (days)</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -113,7 +111,7 @@ const SpeciesForm = ({
             )}
           />
           <div className="space-y-2">
-            <FormLabel className="text-light-200">Tips</FormLabel>
+            <FormLabel>Tips</FormLabel>
 
             <div className="flex items-end gap-2">
               <Input

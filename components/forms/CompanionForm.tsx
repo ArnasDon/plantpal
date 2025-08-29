@@ -78,7 +78,7 @@ const PlantForm = ({
           name="companionId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Companion</FormLabel>
+              <FormLabel>Companion Plant</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange}>
                   <SelectTrigger className="form-select">
@@ -118,7 +118,7 @@ const PlantForm = ({
           type="submit"
           disabled={form.formState.isSubmitting}
         >
-          Add Companion
+          Save Plant Companion
         </Button>
       </form>
     </Form>
