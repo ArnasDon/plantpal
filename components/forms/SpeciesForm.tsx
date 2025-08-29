@@ -69,7 +69,7 @@ const SpeciesForm = ({
 
   return (
     <div className="flex flex-col gap-8 px-12 py-8 max-md:px-2">
-      <h2 className="text-2xl font-bold">Add a new plant species</h2>
+      <h2>Add a new plant species</h2>
       {error && <p className="text-red-500">{error}</p>}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -78,7 +78,7 @@ const SpeciesForm = ({
             name="name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel className="text-light-200">Species Name</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="e.g. Peace Lily"
@@ -90,24 +90,31 @@ const SpeciesForm = ({
               </FormItem>
             )}
           />
-          <div className="space-y-2">
-            <FormLabel>Tips</FormLabel>
-            {tips.map((tip, index) => (
-              <div key={index} className="flex w-fit items-center gap-2">
-                <span className="flex-1">{tip}</span>
-                <button
-                  className="cursor-pointer"
-                  onClick={() => handleRemoveTip(index)}
-                >
-                  <Image
-                    src="/icons/trash.svg"
-                    alt="Close"
-                    width={16}
-                    height={16}
+          <FormField
+            control={form.control}
+            name="wateringFrequencyDays"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-light-200">
+                  Watering Frequency (days)
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(Number(e.target.value));
+                    }}
+                    className="bg-dark-200 border-dark-300"
                   />
-                </button>
-              </div>
-            ))}
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="space-y-2">
+            <FormLabel className="text-light-200">Tips</FormLabel>
+
             <div className="flex items-end gap-2">
               <Input
                 placeholder="e.g. Likes shady places"
@@ -124,29 +131,28 @@ const SpeciesForm = ({
               </Button>
               <FormMessage />
             </div>
+            <div className="bg-dark-200 border-dark-300 flex flex-col gap-4 rounded-lg border px-4 py-2">
+              {tips.map((tip, index) => (
+                <div key={index} className="flex w-full items-center">
+                  <span className="flex-1">{tip}</span>
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => handleRemoveTip(index)}
+                  >
+                    <Image
+                      src="/icons/trash.svg"
+                      alt="Close"
+                      width={16}
+                      height={16}
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <FormField
-            control={form.control}
-            name="wateringFrequencyDays"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Watering Frequency (days)</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    {...field}
-                    onChange={(e) => {
-                      field.onChange(Number(e.target.value));
-                    }}
-                    className="bg-dark-200 border-dark-300"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type="submit" className="cursor-pointer">
-            Submit
+
+          <Button type="submit" className="w-full cursor-pointer">
+            Save Plant Species
           </Button>
         </form>
       </Form>

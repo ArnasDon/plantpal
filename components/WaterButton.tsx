@@ -29,7 +29,7 @@ const WaterButton = ({ plantId }: { plantId: string }) => {
     }
   };
   return (
-    <Button onClick={(e) => handleWaterPlant(e)}>
+    <Button onClick={(e) => handleWaterPlant(e)} className="cursor-pointer">
       <Image src="/icons/water.svg" alt="Watering can" width={14} height={14} />
       <p>Mark as Watered</p>
     </Button>

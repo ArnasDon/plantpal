@@ -165,6 +165,7 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
                   </FormControl>
 
                   <Button
+                    type="button"
                     className="cursor-pointer"
                     onClick={() => setIsOpen(true)}
                   >
@@ -215,7 +216,7 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
             type="submit"
             disabled={form.formState.isSubmitting}
           >
-            {plant ? "Edit Plant" : "Save Plant"}
+            {plant ? "Update and Save Plant" : "Save Plant"}
           </Button>
         </form>
       </Form>
