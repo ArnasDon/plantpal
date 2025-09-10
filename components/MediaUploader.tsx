@@ -59,10 +59,7 @@ const MediaUploader = ({
     >
       {({ open }) => (
         <div className="flex flex-col gap-4">
-          <div
-            className="bg-dark-200 border-dark-300 flex h-9 cursor-pointer items-center justify-center rounded-lg border-2 text-center"
-            onClick={() => open()}
-          >
+          <div className="media-uploader" onClick={() => open()}>
             {image ? (
               <div className="flex items-center justify-center gap-2">
                 <CldImage
@@ -78,7 +75,7 @@ const MediaUploader = ({
                 </p>
               </div>
             ) : (
-              <p className="p-14-medium">Click here to upload image</p>
+              <p className="text-sm">Click here to upload image</p>
             )}
           </div>
         </div>
