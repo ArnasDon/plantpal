@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { toast } from "sonner";
 import { deletePlantCompanion } from "@/lib/actions/companion.actions";
+import PlantImage from "./PlantImage";
 
 const CompanionCard = ({
   name,
@@ -17,12 +18,14 @@ const CompanionCard = ({
   notes,
   id,
   companionId,
+  image,
 }: {
   name: string;
   species: string;
   notes: string;
   id: string;
   companionId: string;
+  image: string;
 }) => {
   return (
     <>
@@ -34,6 +37,7 @@ const CompanionCard = ({
               species={species}
               id={id}
               companionId={companionId}
+              image={image}
             />
           </TooltipTrigger>
           <TooltipContent>
@@ -46,6 +50,7 @@ const CompanionCard = ({
           species={species}
           id={id}
           companionId={companionId}
+          image={image}
         />
       )}
     </>
@@ -59,11 +64,13 @@ const CompanionCardContent = ({
   species,
   id,
   companionId,
+  image,
 }: {
   name: string;
   species: string;
   id: string;
   companionId: string;
+  image: string;
 }) => {
   const handleDeletePlantCompanion = async (
     plantId: string,
@@ -101,14 +108,17 @@ const CompanionCardContent = ({
             handleDeletePlantCompanion(id, companionId, `/plants/${id}`);
           }}
         />
-        <div className="flex flex-col items-center gap-4">
+        <div className="flex min-h-full flex-1 flex-col items-center gap-4">
           <Badge className="badge-species">{species}</Badge>
           <p className="font-fraunces text-2xl font-semibold">{name}</p>
-          <Image
-            src="/images/plant-default.png"
+
+          <PlantImage
+            src={image}
+            fallbackSrc="/images/plant-default.png"
             alt="Plant"
-            width={100}
-            height={100}
+            width={120}
+            height={120}
+            className="size-[120px] object-contain"
           />
         </div>
       </div>

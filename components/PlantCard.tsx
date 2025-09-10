@@ -1,10 +1,11 @@
+"use client";
 import React from "react";
 import { Badge } from "./ui/badge";
-import Image from "next/image";
 import HydrationStatus from "./HydrationStatus";
 import { cn, getHydrationPercentage } from "@/lib/utils";
 import Link from "next/link";
 import WaterButton from "./WaterButton";
+import PlantImage from "./PlantImage";
 
 const PlantCard = ({ plant }: { plant: Plant }) => {
   let hydrationPercentage = 0;
@@ -54,8 +55,8 @@ const PlantCard = ({ plant }: { plant: Plant }) => {
           </div>
           {/* isolate overflow only for plant image to add a nice effect */}
           <div className="overflow-hidden">
-            <Image
-              src="/images/plant-default.png"
+            <PlantImage
+              src={plant.imageUrl}
               alt="Plant"
               width={160}
               height={200}

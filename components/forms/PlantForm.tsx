@@ -28,16 +28,30 @@ import SpeciesForm from "./SpeciesForm";
 import { getSpecies } from "@/lib/actions/species.actions";
 import { redirect } from "next/navigation";
 import { toast } from "sonner";
+import MediaUploader from "../MediaUploader";
 
 const formSchema = z.object({
   speciesId: z.string().min(1, { message: "Species is required" }),
   name: z.string().min(1, { message: "Name is required" }),
   notes: z.string().optional(),
   wateringFrequencyOverride: z.number().optional(),
+  imageUrl: z.string(),
 });
 
 const PlantForm = ({ plant }: { plant?: Plant }) => {
   const [species, setSpecies] = useState<Species[]>([]);
+  const [image, setImage] = useState<CloudinaryImage | null>(
+    plant?.imageUrl
+      ? {
+          publicId: "",
+          width: 0,
+          height: 0,
+          secureURL: plant.imageUrl,
+          originalFilename: "",
+          format: "",
+        }
+      : null
+  );
 
   const fetchSpecies = async () => {
     const species = await getSpecies();
@@ -56,6 +70,7 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
       name: plant?.name || "",
       notes: plant?.notes || "",
       wateringFrequencyOverride: plant?.wateringFrequencyOverride || 0,
+      imageUrl: plant?.imageUrl || "",
     },
   });
 
@@ -73,7 +88,11 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
         toast.custom(() => (
           <div className="toast-error">
             <h3 className="font-semibold">Plant update failed</h3>
-            <p className="text-sm">{result.error}</p>
+            <p className="text-sm">
+              {typeof result.error === "string"
+                ? result.error
+                : result.error?.name || "Unknown error"}
+            </p>
           </div>
         ));
       }
@@ -205,6 +224,30 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
                     onChange={(e) => {
                       field.onChange(Number(e.target.value));
                     }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Plant Image</FormLabel>
+                <FormControl>
+                  {/* <Input
+                    type="number"
+                    {...field}
+                    onChange={(e) => {
+                      field.onChange(Number(e.target.value));
+                    }}
+                  /> */}
+                  <MediaUploader
+                    onValueChange={field.onChange}
+                    setImage={setImage}
+                    image={image}
                   />
                 </FormControl>
                 <FormMessage />

@@ -14,6 +14,7 @@ import { getEligibleCompanions } from "@/lib/actions/companion.actions";
 import WaterButton from "@/components/WaterButton";
 import Link from "next/link";
 import DeletePlantButton from "@/components/DeletePlantButton";
+import PlantImage from "@/components/PlantImage";
 
 const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const user = await getUser();
@@ -76,12 +77,13 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                 Water Today
               </Badge>
             )}
-            <Image
-              src={"/images/plant-big.png"}
+            <PlantImage
+              src={plant.data?.imageUrl}
+              fallbackSrc="/images/plant-big.png"
               alt="Plant"
               width={500}
               height={500}
-              className="object-cover"
+              className="size-[500px] object-cover object-top"
             />
           </div>
           <div className="plant-details-notes">
@@ -146,6 +148,7 @@ const PlantPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   notes={companion.notes}
                   id={companion.companion!.id}
                   companionId={companion.plant!.id}
+                  image={companion.companion!.imageUrl}
                 />
               ))}
             </div>

@@ -78,6 +78,7 @@ model Plant {
   name                        String
   wateringFrequencyOverride   Float?
   notes                       String?
+  imageUrl                       String   @default("")
   createdAt                   DateTime @default(now())
   updatedAt                   DateTime @updatedAt @default(now())
 

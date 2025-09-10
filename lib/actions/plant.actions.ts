@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma-client";
 import { getUser } from "./auth.actions";
 import { revalidatePath } from "next/cache";
+import { PrismaClientValidationError } from "@prisma/client/runtime/library";
 
 export const createPlant = async (formData: PlantForm) => {
   const user = await getUser();
@@ -20,6 +21,7 @@ export const createPlant = async (formData: PlantForm) => {
       wateringFrequencyOverride:
         formData.wateringFrequencyOverride || undefined,
       speciesId: formData.speciesId,
+      imageUrl: formData.imageUrl,
     },
   });
   return { success: true, data: plant };
@@ -38,7 +40,7 @@ export const updatePlant = async (plantId: string, formData: PlantForm) => {
     });
     return { success: true, data: plant };
   } catch (error) {
-    return { success: false, error: error as string };
+    return { success: false, error: error as PrismaClientValidationError };
   }
 };
 
