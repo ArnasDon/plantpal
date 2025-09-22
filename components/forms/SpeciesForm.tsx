@@ -129,7 +129,7 @@ const SpeciesForm = ({
               </Button>
               <FormMessage />
             </div>
-            <div className="bg-dark-200 border-dark-300 flex flex-col gap-4 rounded-lg border px-4 py-2">
+            <div className="species-form-tips">
               {tips.map((tip, index) => (
                 <div key={index} className="flex w-full items-center">
                   <span className="flex-1">{tip}</span>

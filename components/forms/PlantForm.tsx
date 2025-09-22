@@ -104,12 +104,12 @@ const PlantForm = ({ plant }: { plant?: Plant }) => {
             <h3 className="font-semibold">Plant created successfully</h3>
           </div>
         ));
-        redirect(`/plants/${result.data.id}`);
+        redirect(`/plants/${result.data?.id}`);
       } else {
         toast.custom(() => (
           <div className="toast-error">
             <h3 className="font-semibold">Plant creation failed</h3>
-            <p className="text-sm">{result.error}</p>
+            <p className="text-sm">{result.error as string}</p>
           </div>
         ));
       }

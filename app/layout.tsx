@@ -16,7 +16,7 @@ const onest = Onest({
 export const metadata: Metadata = {
   title: "PlantPal",
   description:
-    "PlantPal is a plant care app that helps you take care of your plants",
+    "PlantPal is a plant care app that helps you keep track of your plants and their watering schedule",
 };
 
 export default function RootLayout({

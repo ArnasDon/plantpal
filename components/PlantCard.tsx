@@ -10,12 +10,11 @@ import PlantImage from "./PlantImage";
 const PlantCard = ({ plant }: { plant: Plant }) => {
   let hydrationPercentage = 0;
 
+  // Not sure if the fix won't break this
   if (plant.daysSinceLastWatering !== null) {
     hydrationPercentage = getHydrationPercentage(
-      plant.daysSinceLastWatering || 0,
-      plant.wateringFrequencyOverride ||
-        plant.species?.wateringFrequencyDays ||
-        0
+      plant.daysSinceLastWatering!,
+      plant.wateringFrequencyOverride!
     );
   }
 

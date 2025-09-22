@@ -70,9 +70,11 @@ const MediaUploader = ({
                   removeBackground
                   className="size-6 object-contain"
                 />
-                <p className="text-sm">
-                  {image.originalFilename}.{image.format}
-                </p>
+                {image.originalFilename && (
+                  <p className="text-sm">
+                    {image.originalFilename}.{image.format}
+                  </p>
+                )}
               </div>
             ) : (
               <p className="text-sm">Click here to upload image</p>

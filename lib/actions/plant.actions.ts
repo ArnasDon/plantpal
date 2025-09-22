@@ -10,21 +10,24 @@ export const createPlant = async (formData: PlantForm) => {
   if (!user) {
     return { error: "User not found" };
   }
-  const userId = user.id;
 
-  const plant = await prisma.plant.create({
-    data: {
-      id: crypto.randomUUID(),
-      userId: userId,
-      name: formData.name,
-      notes: formData.notes || undefined,
-      wateringFrequencyOverride:
-        formData.wateringFrequencyOverride || undefined,
-      speciesId: formData.speciesId,
-      imageUrl: formData.imageUrl,
-    },
-  });
-  return { success: true, data: plant };
+  try {
+    const plant = await prisma.plant.create({
+      data: {
+        id: crypto.randomUUID(),
+        userId: user.id,
+        name: formData.name,
+        notes: formData.notes || undefined,
+        wateringFrequencyOverride:
+          formData.wateringFrequencyOverride || undefined,
+        speciesId: formData.speciesId,
+        imageUrl: formData.imageUrl,
+      },
+    });
+    return { success: true, data: plant };
+  } catch (error) {
+    return { success: false, error: error as PrismaClientValidationError };
+  }
 };
 
 export const updatePlant = async (plantId: string, formData: PlantForm) => {
